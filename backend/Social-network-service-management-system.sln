@@ -1,0 +1,41 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-gateway", "api-gateway\api-gateway.csproj", "{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "user-service", "user-service\user-service.csproj", "{E2ED5C87-23D2-94A7-B204-917761E83263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "social-service", "social-service\social-service.csproj", "{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2ED5C87-23D2-94A7-B204-917761E83263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2ED5C87-23D2-94A7-B204-917761E83263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2ED5C87-23D2-94A7-B204-917761E83263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2ED5C87-23D2-94A7-B204-917761E83263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E32D440D-26D0-C3C7-7AC8-EB9E8C51C999} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+		{E2ED5C87-23D2-94A7-B204-917761E83263} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+		{0C5E9FBA-29A8-5CA5-A86D-F84C9EEE98D5} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B5137B7-66C5-45AF-A3F9-43BB37EFA3A6}
+	EndGlobalSection
+EndGlobal

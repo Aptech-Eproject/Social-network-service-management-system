@@ -1,0 +1,62 @@
+services:
+  # ============================================
+  # 🚪 API GATEWAY - Public
+  # ============================================
+  api-gateway:
+    build:
+      context: ../../backend/api-gateway
+      dockerfile: ../../container/dockerfiles/ci/gateway.ci.Dockerfile
+    image: snms-api-gateway:ci
+    container_name: snms-gateway-ci
+    ports:
+      - "8000:8000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8000
+    networks:
+      - snms-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # ============================================
+  # 👤 USER SERVICE - Internal
+  # ============================================
+  user-service:
+    build:
+      context: ../../backend/user-service
+      dockerfile: ../../container/dockerfiles/ci/user.ci.Dockerfile
+    image: snms-user-service:ci
+    container_name: snms-user-ci
+    expose:
+      - "8081"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8081
+    networks:
+      - snms-network
+
+  # ============================================
+  # 🌐 SOCIAL SERVICE - Internal
+  # ============================================
+  social-service:
+    build:
+      context: ../../backend/social-service
+      dockerfile: ../../container/dockerfiles/ci/social.ci.Dockerfile
+    image: snms-social-service:ci
+    container_name: snms-social-ci
+    expose:
+      - "8082"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8082
+    networks:
+      - snms-network
+
+networks:
+  snms-network:
+    driver: bridge
+    name: snms-ci-network
