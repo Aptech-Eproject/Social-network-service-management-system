@@ -55,6 +55,7 @@ jobs:
         with:
           context: ./backend/api-gateway
           file: ./container/dockerfiles/dev/gateway.dev-base.Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/snms-api-gateway:dev-${{ github.sha }}
@@ -83,6 +84,7 @@ jobs:
         with:
           context: ./backend/user-service
           file: ./container/dockerfiles/dev/user.dev-base.Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/snms-user-service:dev-${{ github.sha }}
@@ -111,6 +113,7 @@ jobs:
         with:
           context: ./backend/social-service
           file: ./container/dockerfiles/dev/social.dev-base.Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/snms-social-service:dev-${{ github.sha }}
