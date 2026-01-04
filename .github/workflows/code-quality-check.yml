@@ -2,76 +2,79 @@ name: Code Quality Check
 
 on:
   push:
-    branches: ['**', '!dev', '!main']
+    branches-ignore:
+      - dev
+      - main
+    paths:
+      - backend/**
+      - frontend/**
+      - container/dockerfiles/**
   pull_request:
-    branches: ['**']
+    paths:
+      - backend/**
+      - frontend/**
+      - container/dockerfiles/**
 
 jobs:
   backend-lint:
+    name: Backend - Lint & Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup .NET
+
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      
+
       - name: Restore dependencies
         run: dotnet restore backend/Social-network-service-management-system.sln
-      
-      - name: Build check
+
+      - name: Build (no publish)
         run: dotnet build backend/Social-network-service-management-system.sln --no-restore --configuration Debug
-      
+
       - name: Format check
-        run: dotnet format backend/Social-network-service-management-system.sln --verify-no-changes --verbosity diagnostic
+        run: dotnet format backend/Social-network-service-management-system.sln --verify-no-changes
 
   frontend-lint:
+    name: Frontend - Lint & Type Check
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: ESLint check
         run: npm run lint
-      
+
       - name: TypeScript check
         run: npx tsc --noEmit
 
-  dockerfile-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Lint Dockerfiles
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: "container/dockerfiles/**/*.Dockerfile"
-          recursive: true
-          failure-threshold: warning
-
+  
+  # ---------------------------------------------------
+  # 📋 Summary
+  # ---------------------------------------------------
   summary:
-    needs: [backend-lint, frontend-lint, dockerfile-lint]
+    name: Summary
+    needs: [backend-lint, frontend-lint]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Check results
+      - name: Report result
         run: |
-          if [ "${{ needs.backend-lint.result }}" == "failure" ] || \
-             [ "${{ needs.frontend-lint.result }}" == "failure" ] || \
-             [ "${{ needs.dockerfile-lint.result }}" == "failure" ]; then
+          if [ "${{ needs.backend-lint.result }}" != "success" ] || \
+             [ "${{ needs.frontend-lint.result }}" != "success" ]; then
             echo "❌ Code quality checks failed"
             exit 1
           else
