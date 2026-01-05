@@ -14,10 +14,10 @@ public static class RateLimitConfiguration
                 opt.PermitLimit = 100;
                 opt.Window = TimeSpan.FromMinutes(1);
             });
-            
+
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
         });
-        
+
         return services;
     }
 }
