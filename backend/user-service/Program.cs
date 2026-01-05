@@ -1,3 +1,8 @@
+using DotNetEnv;
+
+// Load .env file
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -35,7 +40,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
-
+app.MapGet("/health", () => "User Service is running...");
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
