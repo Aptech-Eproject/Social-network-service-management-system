@@ -4,8 +4,10 @@ public static class HealthCheckConfiguration
 {
     public static IServiceCollection AddHealthCheckServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var userServiceUrl = configuration["ServiceUrls:UserService"];
-        var socialServiceUrl = configuration["ServiceUrls:SocialService"];
+        var userServiceUrl = Environment.GetEnvironmentVariable("USER_SERVICE_URL")
+            ?? configuration["ServiceUrls:UserService"];
+        var socialServiceUrl = Environment.GetEnvironmentVariable("SOCIAL_SERVICE_URL")
+            ?? configuration["ServiceUrls:SocialService"];
 
         if (!string.IsNullOrEmpty(userServiceUrl) && !string.IsNullOrEmpty(socialServiceUrl))
         {
