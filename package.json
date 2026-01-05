@@ -19,7 +19,6 @@
     "dev:gateway": "docker exec -it snms-gateway-dev sh",
     "dev:user": "docker exec -it snms-user-dev sh",
     "dev:social": "docker exec -it snms-social-dev sh",
-    "dev:mysql": "docker exec -it snms-mysql-dev mysql -uroot -p",
     "dev:redis": "docker exec -it snms-redis-dev redis-cli",
     
     "//": "********************* LOGS *********************",
@@ -27,12 +26,7 @@
     "dev:log:gateway": "docker compose -p snms -f container/compose/docker-compose.dev.yml logs -f api-gateway",
     "dev:log:user": "docker compose -p snms -f container/compose/docker-compose.dev.yml logs -f user-service",
     "dev:log:social": "docker compose -p snms -f container/compose/docker-compose.dev.yml logs -f social-service",
-    "dev:log:mysql": "docker compose -p snms -f container/compose/docker-compose.dev.yml logs -f mysql",
     "dev:log:redis": "docker compose -p snms -f container/compose/docker-compose.dev.yml logs -f redis",
-    
-    "//": "********************* DATABASE *********************",
-    "dev:db:reset": "docker compose -p snms -f container/compose/docker-compose.dev.yml down -v && docker compose -p snms -f container/compose/docker-compose.dev.yml up -d mysql",
-    "dev:db:backup": "docker exec snms-mysql-dev mysqldump -uroot -p --all-databases > backup_$(date +%Y%m%d_%H%M%S).sql",
     
     "//": "********************* FRONTEND (HOST) *********************",
     "frontend:dev": "cd frontend && npm run dev",

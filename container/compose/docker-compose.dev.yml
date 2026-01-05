@@ -7,33 +7,21 @@ services:
     container_name: snms-gateway-dev
     ports:
       - "8000:8000"
-    
-    # Mount source files only
     volumes:
-      - ../../backend/api-gateway/Program.cs:/app/Program.cs:ro
-      
-      # Mount config files
-      - ../../backend/api-gateway/appsettings.json:/app/appsettings.json:ro
-      - ../../backend/api-gateway/appsettings.Development.json:/app/appsettings.Development.json:ro
-      
-      # Named volumes for build outputs
+      - ../../backend/api-gateway:/app
       - gateway_bin:/app/bin
       - gateway_obj:/app/obj
-      
-      # NOT mounted: *.csproj (in image)
-      # NOT mounted: NuGet packages (in image)
-    
+
     env_file:
       - ../../backend/api-gateway/.env
-    
+
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8000
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
-    
-    command: dotnet watch run --no-launch-profile
-    
+
+    command: dotnet watch --project *.csproj run --no-launch-profile
     depends_on:
       - user-service
       - social-service
@@ -51,21 +39,11 @@ services:
     container_name: snms-user-dev
     expose:
       - "8081"
-    
-    # Mount source files only
     volumes:
-      - ../../backend/user-service/Program.cs:/app/Program.cs:ro
-      
-      # Mount config files
-      - ../../backend/user-service/appsettings.json:/app/appsettings.json:ro
-      - ../../backend/user-service/appsettings.Development.json:/app/appsettings.Development.json:ro
-      
-      # Named volumes for build outputs
+      - ../../backend/user-service:/app
       - user_bin:/app/bin
       - user_obj:/app/obj
       
-      # NOT mounted: *.csproj (in image)
-    
     env_file:
       - ../../backend/user-service/.env
     
@@ -75,7 +53,7 @@ services:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     
-    command: dotnet watch run --no-launch-profile
+    command: dotnet watch --project *.csproj run --no-launch-profile
     
     networks:
       - snms-network
@@ -90,16 +68,8 @@ services:
     container_name: snms-social-dev
     expose:
       - "8082"
-    
-    # Mount source files only
     volumes:
-      - ../../backend/social-service/Program.cs:/app/Program.cs:ro
-      
-      # Mount config files
-      - ../../backend/social-service/appsettings.json:/app/appsettings.json:ro
-      - ../../backend/social-service/appsettings.Development.json:/app/appsettings.Development.json:ro
-      
-      # Named volumes for build outputs
+      - ../../backend/social-service:/app
       - social_bin:/app/bin
       - social_obj:/app/obj
     
@@ -112,11 +82,26 @@ services:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     
-    command: dotnet watch run --no-launch-profile
+    command: dotnet watch --project *.csproj run --no-launch-profile
     
     networks:
       - snms-network
     
+    restart: unless-stopped
+
+  # ============================================
+  # 🧠 REDIS - Cache 
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: snms-redis-dev
+    ports:
+      - "6379:6379"          
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - snms-network
     restart: unless-stopped
 
 networks:
@@ -131,3 +116,4 @@ volumes:
   user_obj:
   social_bin:
   social_obj:
+  redis_data:

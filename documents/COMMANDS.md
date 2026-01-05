@@ -135,21 +135,6 @@ Vào shell của Social Service container
 
 ---
 
-### **`npm run dev:mysql`**
-Vào MySQL CLI
-
-```bash
-npm run dev:mysql
-# Enter password khi được hỏi
-# Inside MySQL
-SHOW DATABASES;
-USE user_db;
-SHOW TABLES;
-exit
-```
-
----
-
 ### **`npm run dev:redis`**
 Vào Redis CLI
 
@@ -193,13 +178,6 @@ Logs của Social Service
 
 ---
 
-### **`npm run dev:log:mysql`**
-Logs của MySQL
-
-**Khi dùng**: Debug database connections, queries
-
----
-
 ### **`npm run dev:log:redis`**
 Logs của Redis
 
@@ -210,14 +188,13 @@ Logs của Redis
 ## 🗄️ Database Operations
 
 ### **`npm run dev:db:reset`**
-Reset database (xóa volumes và restart MySQL)
+Reset database migrations
 
 **⚠️ CẢNH BÁO**: Mất tất cả data
 
 ```bash
 npm run dev:db:reset
-# Đợi MySQL khởi động (30s)
-# Run migrations nếu cần
+# Run migrations lại
 ```
 
 ---
@@ -484,7 +461,7 @@ npm run dev:log:user
 
 # Vào container
 npm run dev:gateway
-npm run dev:mysql
+npm run dev:user
 
 # Restart service
 npm run dev:restart
@@ -562,14 +539,12 @@ npm run frontend:dev
 ### **Database issues**
 
 ```bash
-# Reset database
-npm run dev:db:reset
-
 # Check logs
-npm run dev:log:mysql
+npm run dev:log:user
+npm run dev:log:social
 
-# Vào MySQL
-npm run dev:mysql
+# Reset migrations
+npm run dev:db:reset
 ```
 
 ---
