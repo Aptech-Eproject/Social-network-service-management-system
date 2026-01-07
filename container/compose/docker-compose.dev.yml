@@ -25,7 +25,14 @@ services:
     depends_on:
       - user-service
       - social-service
-    
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 256MB
+        reservations:
+          cpus: 0.25
+          memory: 128MB
     networks:
       - snms-network
     
@@ -57,6 +64,14 @@ services:
     
     networks:
       - snms-network
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 128MB
+        reservations:
+          cpus: 0.25
+          memory: 64MB
     
     restart: unless-stopped
 
@@ -86,7 +101,14 @@ services:
     
     networks:
       - snms-network
-    
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 256MB
+        reservations:
+          cpus: 0.25
+          memory: 128MB
     restart: unless-stopped
 
   # ============================================
@@ -102,6 +124,14 @@ services:
     command: redis-server --appendonly yes
     networks:
       - snms-network
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 256MB
+        reservations:
+          cpus: 0.25
+          memory: 128MB
     restart: unless-stopped
 
 networks:
