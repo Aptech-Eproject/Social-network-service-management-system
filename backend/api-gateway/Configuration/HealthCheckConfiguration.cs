@@ -4,21 +4,12 @@ public static class HealthCheckConfiguration
 {
     public static IServiceCollection AddHealthCheckServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var userServiceUrl = Environment.GetEnvironmentVariable("USER_SERVICE_URL")
-            ?? configuration["ServiceUrls:UserService"];
-        var socialServiceUrl = Environment.GetEnvironmentVariable("SOCIAL_SERVICE_URL")
-            ?? configuration["ServiceUrls:SocialService"];
+        var userServiceUrl = Environment.GetEnvironmentVariable("USER_SERVICE_URL") ?? "http://user-service:8081";
+        var socialServiceUrl = Environment.GetEnvironmentVariable("SOCIAL_SERVICE_URL") ?? "http://social-service:8082";
 
-        if (!string.IsNullOrEmpty(userServiceUrl) && !string.IsNullOrEmpty(socialServiceUrl))
-        {
-            services.AddHealthChecks()
-                .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
-                .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
-        }
-        else
-        {
-            services.AddHealthChecks();
-        }
+        services.AddHealthChecks()
+            .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
+            .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
 
         return services;
     }
