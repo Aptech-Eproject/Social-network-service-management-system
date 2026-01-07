@@ -28,10 +28,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.5
+          cpus: 1
           memory: 256MB
         reservations:
-          cpus: 0.25
+          cpus: 0.5
           memory: 128MB
     networks:
       - snms-network
@@ -67,11 +67,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.25
-          memory: 128MB
+          cpus: 0.5
+          memory: 256MB
         reservations:
           cpus: 0.25
-          memory: 64MB
+          memory: 128MB
     
     restart: unless-stopped
 
