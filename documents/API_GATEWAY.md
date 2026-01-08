@@ -1,210 +1,139 @@
-# API Gateway Documentation
+# 🚪 API Gateway Architecture
 
-## Tổng quan
+## 📋 Tổng Quan
 
-API Gateway là điểm truy cập duy nhất (single entry point) cho tất cả client requests đến hệ thống microservices. Gateway xử lý routing, load balancing, rate limiting, và health monitoring cho các downstream services.
+**API Gateway** là điểm vào duy nhất cho tất cả requests từ frontend đến backend services.
 
-## Công nghệ sử dụng
+**Technology Stack**:
+- .NET 8
+- YARP (Yet Another Reverse Proxy)
+- Rate Limiting
+- Health Checks
+- CORS
 
-### Core Technologies
-- **.NET 8.0** - Framework chính
-- **YARP (Yet Another Reverse Proxy)** - Reverse proxy và load balancing
-- **ASP.NET Core Rate Limiting** - Giới hạn request
-- **DotNetEnv** - Quản lý biến môi trường
+---
 
-### Packages chính
-```xml
-<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
-<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="8.0.1" />
-<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
-<PackageReference Include="DotNetEnv" Version="3.1.1" />
-<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-```
-
-## Kiến trúc
+## 📁 Cấu Trúc Thư Mục
 
 ```
-┌─────────────┐
-│   Client    │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────────────────────────────┐
-│         API Gateway :8000           │
-│  ┌──────────────────────────────┐  │
-│  │  Rate Limiter (100 req/min)  │  │
-│  └──────────────────────────────┘  │
-│  ┌──────────────────────────────┐  │
-│  │    YARP Reverse Proxy        │  │
-│  │  - Load Balancing            │  │
-│  │  - Health Checks             │  │
-│  └──────────────────────────────┘  │
-└────────┬──────────────┬─────────────┘
-         │              │
-    ┌────▼────┐    ┌───▼─────┐
-    │  User   │    │ Social  │
-    │ Service │    │ Service │
-    │  :8081  │    │  :8082  │
-    └─────────┘    └─────────┘
+backend/api-gateway/
+├── Configuration/
+│   ├── CorsConfiguration.cs           # CORS policy
+│   ├── HealthCheckConfiguration.cs    # Health check setup
+│   ├── RateLimitConfiguration.cs      # Rate limiting rules
+│   └── ReverseProxyConfiguration.cs   # YARP routing
+├── Extensions/
+│   └── HealthCheckEndpoints.cs        # Health check endpoints
+├── Properties/
+│   └── launchSettings.json
+├── Program.cs                         # Entry point
+├── appsettings.json                   # Routing config
+├── appsettings.Development.json       # Dev settings
+└── api-gateway.csproj                 # Project file
 ```
 
-## Chức năng chính
+---
 
-### 1. Reverse Proxy & Routing
-Điều hướng requests từ client đến đúng downstream service dựa trên URL pattern.
+## 🔀 Routing Configuration
 
-**Cấu hình:**
-- `/api/v1/users/**` → User Service
-- `/api/v1/social/**` → Social Service
+### **Routes Defined** (appsettings.json)
 
-### 2. Load Balancing
-Phân phối traffic đều giữa các instances của service (nếu có nhiều instances).
+| Route | Target Service | Path Transform |
+|-------|---------------|----------------|
+| `/api/v1/users/**` | User Service (8081) | Remove `/api/v1/users` prefix |
+| `/api/v1/social/**` | Social Service (8082) | Remove `/api/v1/social` prefix |
+| `/health/user` | User Service | Transform to `/health` |
+| `/health/social` | Social Service | Transform to `/health` |
 
-**Policy:** RoundRobin - Luân phiên giữa các destinations
+### **Example Routing**
 
-### 3. Rate Limiting
-Giới hạn số lượng requests để bảo vệ hệ thống khỏi abuse và DDoS.
+```
+Frontend Request: GET /api/v1/users/profile
+                    ↓
+API Gateway: http://localhost:8000/api/v1/users/profile
+                    ↓
+User Service: http://user-service:8081/profile
+```
 
-**Cấu hình:**
-- **Limit:** 100 requests/phút mỗi IP
-- **Response:** HTTP 429 (Too Many Requests)
+---
 
-### 4. Health Checks
-Giám sát tình trạng của các downstream services.
+## 🛡️ Security Features
 
-**Active Health Check:**
-- Interval: 10 giây
-- Timeout: 5 giây
+### **1. CORS Configuration**
+
+**File**: `Configuration/CorsConfiguration.cs`
+
+**Settings**:
+```csharp
+AllowedOrigins: From CORS_ORIGINS env var
+AllowedMethods: Any
+AllowedHeaders: Any
+AllowCredentials: true
+```
+
+**Environment Variable**:
+```bash
+CORS_ORIGINS=http://localhost:3000 || http://example-frontend.com
+```
+
+---
+
+### **2. Rate Limiting**
+
+**File**: `Configuration/RateLimitConfiguration.cs`
+
+**Policy**: Fixed Window
+- **Limit**: 100 requests
+- **Window**: 1 minute
+- **Response**: 429 Too Many Requests
+
+**Applied to**:
+- `/api/v1/users/**`
+- `/api/v1/social/**`
+
+---
+
+## 🏥 Health Checks
+
+### **Endpoints**
+
+| Endpoint | Purpose | Response |
+|----------|---------|----------|
+| `/health` | Gateway health | `{"status":"healthy","service":"api-gateway"}` |
+| `/health/check` | All services health | Detailed status of user-service + social-service |
+| `/health/user` | User service health | Proxied to user-service `/health` |
+| `/health/social` | Social service health | Proxied to social-service `/health` |
+
+### **Active Health Checks**
+
+**User Service**:
+- Interval: 5 minutes 10 seconds
+- Timeout: 30 seconds
 - Policy: ConsecutiveFailures
 
-**Passive Health Check:**
-- Policy: TransportFailureRate
-- Reactivation: 1 phút
+**Social Service**:
+- Interval: 10 seconds
+- Timeout: 5 seconds
+- Policy: ConsecutiveFailures
 
-## API Endpoints
+---
 
-### Health Check Endpoints
+## 🔧 Configuration Files
 
-#### Gateway Health
-```http
-GET /health
-```
-**Response:**
+### **appsettings.json**
+
+**ReverseProxy Section**:
 ```json
 {
-  "status": "healthy",
-  "service": "api-gateway"
-}
-```
-
-#### All Services Health
-```http
-GET /health/services
-```
-**Response:**
-```json
-{
-  "status": "Healthy",
-  "services": [
-    {
-      "name": "user-service",
-      "status": "Healthy",
-      "description": null
-    },
-    {
-      "name": "social-service",
-      "status": "Healthy",
-      "description": null
-    }
-  ]
-}
-```
-
-#### User Service Health (Proxy)
-```http
-GET /health/user
-```
-
-#### Social Service Health (Proxy)
-```http
-GET /health/social
-```
-
-### API Routes (v1)
-
-#### User Service Routes
-```http
-# Authentication
-POST /api/v1/users/auth/login
-POST /api/v1/users/auth/register
-POST /api/v1/users/auth/refresh
-
-# User Management
-GET    /api/v1/users/profile
-PUT    /api/v1/users/profile
-DELETE /api/v1/users/profile
-```
-
-#### Social Service Routes
-```http
-# Posts
-GET    /api/v1/social/posts
-POST   /api/v1/social/posts
-PUT    /api/v1/social/posts/{id}
-DELETE /api/v1/social/posts/{id}
-
-# Comments
-GET    /api/v1/social/posts/{id}/comments
-POST   /api/v1/social/posts/{id}/comments
-```
-
-## Cấu hình
-
-### Environment Variables (.env)
-
-```bash
-# Service URLs
-USER_SERVICE_URL=http://user-service:8081
-SOCIAL_SERVICE_URL=http://social-service:8082
-
-# Rate Limiting
-RATE_LIMIT_REQUESTS_PER_MINUTE=100
-
-# Logging
-LOG_LEVEL=Information
-```
-
-### appsettings.json
-
-```json
-{
-  "ServiceUrls": {
-    "UserService": "${USER_SERVICE_URL}",
-    "SocialService": "${SOCIAL_SERVICE_URL}"
+  "Routes": {
+    "user-service-v1": { ... },
+    "social-service-v1": { ... }
   },
-  "ReverseProxy": {
-    "Routes": {
-      "user-service-v1": {
-        "ClusterId": "user-cluster",
-        "Match": {
-          "Path": "/api/v1/users/{**catch-all}"
-        },
-        "RateLimiterPolicy": "fixed"
-      }
-    },
-    "Clusters": {
-      "user-cluster": {
-        "LoadBalancingPolicy": "RoundRobin",
-        "HealthCheck": {
-          "Active": {
-            "Enabled": true,
-            "Interval": "00:00:10"
-          }
-        },
-        "Destinations": {
-          "user-service-1": {
-            "Address": "${USER_SERVICE_URL}"
-          }
+  "Clusters": {
+    "user-cluster": {
+      "Destinations": {
+        "user-service-1": {
+          "Address": "http://user-service:8081"
         }
       }
     }
@@ -212,130 +141,188 @@ LOG_LEVEL=Information
 }
 ```
 
-## Cách sử dụng
+---
 
-### Development (Local)
+### **.env File**
 
+**Required Variables**:
 ```bash
-# Navigate to gateway directory
-cd backend/api-gateway
-
-# Run with hot reload
-dotnet watch run
-
-# Gateway sẽ chạy tại: http://localhost:8000
+CORS_ORIGINS=http://localhost:3000
+USER_SERVICE_URL=http://user-service:8081
+SOCIAL_SERVICE_URL=http://social-service:8082
 ```
 
-### Docker Compose
+---
 
-```bash
-# Start all services
-docker-compose -f container/compose/docker-compose.dev.yml up
+## 🐳 Docker Configuration
 
-# Gateway URL: http://localhost:8000
+### **Dev Image** (`dev-base.Dockerfile`)
+
+**Contains**:
+- .NET SDK 8.0
+- NuGet packages (restored)
+- Project file (*.csproj)
+
+**Excludes**:
+- Source code (mounted via volumes)
+
+### **Volume Mounts**
+
+```yaml
+volumes:
+  - ../../backend/api-gateway:/app        # Full source code
+  - gateway_bin:/app/bin                  # Build output
+  - gateway_obj:/app/obj                  # Build cache
 ```
 
-### Testing với cURL
+**Hot Reload**: ✅ Enabled
+- Edit `Program.cs` → Auto restart (2-3s)
+- Edit `Configuration/*.cs` → Auto restart
+- Edit `appsettings.json` → Auto restart
 
+---
+
+## 🚀 Development Workflow
+
+### **Start Gateway**
 ```bash
-# Check gateway health
+npm run dev
+# or
+npm run restart:gateway
+```
+
+### **View Logs**
+```bash
+npm run logs:gateway
+```
+
+### **Test Endpoints**
+```bash
+# Gateway health
 curl http://localhost:8000/health
 
-# Check all services
-curl http://localhost:8000/health/services
+# All services health
+curl http://localhost:8000/health/check
 
-# Call user service through gateway
-curl -X POST http://localhost:8000/api/v1/users/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"user@example.com","password":"password123"}'
+# User service (proxied)
+curl http://localhost:8000/api/v1/users/health
 
-# Call social service through gateway
-curl http://localhost:8000/api/v1/social/posts
+# Social service (proxied)
+curl http://localhost:8000/api/v1/social/health
 ```
 
-### Testing với Postman
+---
 
-1. **Base URL:** `http://localhost:8000`
-2. **Headers:**
-   - `Content-Type: application/json`
-   - `Authorization: Bearer {token}` (nếu cần)
+## 📝 Adding New Route
 
-**Example Requests:**
+### **Step 1: Update appsettings.json**
 
+```json
+"Routes": {
+  "new-service-v1": {
+    "ClusterId": "new-cluster",
+    "Match": { "Path": "/api/v1/new/{**catch-all}" },
+    "Transforms": [
+      { "PathRemovePrefix": "/api/v1/new" }
+    ],
+    "RateLimiterPolicy": "fixed"
+  }
+}
 ```
-GET  {{baseUrl}}/health
-GET  {{baseUrl}}/health/services
-POST {{baseUrl}}/api/v1/users/auth/login
-GET  {{baseUrl}}/api/v1/users/profile
-GET  {{baseUrl}}/api/v1/social/posts
+
+### **Step 2: Add Cluster**
+
+```json
+"Clusters": {
+  "new-cluster": {
+    "Destinations": {
+      "new-service-1": {
+        "Address": "http://new-service:8083"
+      }
+    }
+  }
+}
 ```
 
-## Monitoring & Troubleshooting
-
-### Logs
-
-Gateway sử dụng Serilog để logging:
+### **Step 3: Save & Test**
 
 ```bash
-# View logs in console
-docker logs -f snms-gateway-dev
-
-# Log levels: Information, Warning, Error
+# Hot reload tự động restart gateway (2-3s)
+# Test route
+curl http://localhost:8000/api/v1/new/test
 ```
 
-### Common Issues
+---
 
-**1. Service Unavailable (503)**
-- Kiểm tra downstream service có đang chạy không
-- Check health endpoint: `/health/services`
+## 🐛 Troubleshooting
 
-**2. Too Many Requests (429)**
-- Rate limit đã vượt quá 100 req/min
-- Đợi 1 phút hoặc tăng limit trong config
+### **CORS Error**
+```bash
+# Check CORS_ORIGINS in .env
+cat backend/api-gateway/.env | grep CORS_ORIGINS
 
-**3. Gateway Timeout (504)**
-- Downstream service phản hồi chậm
-- Kiểm tra performance của service
+# Should include frontend URL
+CORS_ORIGINS=http://localhost:3000
+```
 
-## Best Practices
+### **Service Not Found (502)**
+```bash
+# Check service is running
+npm run ps
 
-### Client Integration
+# Check health
+curl http://localhost:8000/health/check
 
-1. **Luôn gọi qua Gateway**, không gọi trực tiếp đến services
-2. **Xử lý rate limiting** - Implement retry logic với exponential backoff
-3. **Check health** trước khi deploy
-4. **Sử dụng versioning** trong URL (`/api/v1/...`)
+# Check logs
+npm run logs:gateway
+```
 
-### Configuration
+### **Rate Limit (429)**
+```bash
+# Wait 1 minute or adjust limit in RateLimitConfiguration.cs
+# Edit: opt.PermitLimit = 1000;
+# Save → Auto restart
+```
 
-1. **Sử dụng .env** cho các giá trị khác nhau giữa môi trường
-2. **Không hardcode URLs** trong code
-3. **Monitor health checks** thường xuyên
-4. **Adjust rate limits** dựa trên traffic thực tế
+---
 
-## Security
+## 📊 Architecture Diagram
 
-- ✅ Rate limiting để chống DDoS
-- ✅ Health checks không expose sensitive data
-- ✅ Environment variables cho secrets
-- ⚠️ TODO: Implement JWT validation
-- ⚠️ TODO: Add CORS configuration
-- ⚠️ TODO: Add request/response logging
+```
+┌─────────────────────────────────────────────────────────┐
+│ Frontend (localhost:3000)                               │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│ API Gateway (localhost:8000)                            │
+│  ├─ CORS Check                                          │
+│  ├─ Rate Limiting                                       │
+│  ├─ Routing (YARP)                                      │
+│  └─ Health Checks                                       │
+└─────────────────────────────────────────────────────────┘
+                         │
+        ┌────────────────┼────────────────┐
+        ▼                                 ▼
+┌──────────────────┐            ┌──────────────────┐
+│ User Service     │            │ Social Service   │
+│ (8081)           │            │ (8082)           │
+└──────────────────┘            └──────────────────┘
+```
 
-## Performance
+---
 
-- **Load Balancing:** RoundRobin distribution
-- **Health Checks:** Tự động loại bỏ unhealthy instances
-- **Rate Limiting:** Bảo vệ downstream services
-- **Connection Pooling:** YARP tự động quản lý
+## 🔑 Key Features
 
-## Roadmap
+**Load Balancing**: RoundRobin (ready for multiple instances)
 
-- [ ] JWT Authentication middleware
-- [ ] CORS configuration
-- [ ] Request/Response transformation
-- [ ] Circuit breaker pattern
-- [ ] Distributed tracing
-- [ ] Metrics & monitoring dashboard
-- [ ] API versioning strategy
-- [ ] WebSocket support
+**Health Monitoring**: Active health checks every 10s-5m
+
+**Rate Protection**: 100 req/min per route
+
+**CORS**: Configurable allowed origins
+
+**Hot Reload**: ✅ All configuration changes auto-reload
+
+---
+
