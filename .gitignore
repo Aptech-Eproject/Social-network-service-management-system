@@ -32,3 +32,7 @@ node_modules/
 # Logs
 # ========================
 *.log
+#=========================
+# package-lock root repo
+#=========================
+/package-lock.json
