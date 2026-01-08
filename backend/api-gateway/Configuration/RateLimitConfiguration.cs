@@ -1,4 +1,3 @@
-using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace api_gateway.Configuration;

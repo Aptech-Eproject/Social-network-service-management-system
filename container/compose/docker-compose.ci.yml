@@ -15,6 +15,7 @@ services:
       ASPNETCORE_URLS: http://+:8000
       USER_SERVICE_URL: http://user-service:8081
       SOCIAL_SERVICE_URL: http://social-service:8082
+      CORS_ORIGINS: http://localhost:3000
     networks:
       - snms-network
     depends_on:

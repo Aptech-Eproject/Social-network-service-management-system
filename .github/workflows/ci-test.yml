@@ -21,6 +21,7 @@ jobs:
           # Set service URLs for CI environment
           echo "USER_SERVICE_URL=http://user-service:8081" >> backend/api-gateway/.env
           echo "SOCIAL_SERVICE_URL=http://social-service:8082" >> backend/api-gateway/.env
+          echo "CORS_ORIGINS=http://localhost:3000" >> backend/api-gateway/.env
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
