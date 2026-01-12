@@ -2,43 +2,40 @@ namespace api_gateway.Configuration;
 
 public static class CorsConfiguration
 {
-    private const string FrontendPolicyName = "FrontendOnly";
+    public const string FrontendPolicy = "FrontendOnly";
 
     public static IServiceCollection AddCorsConfiguration(
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var allowedOriginsRaw =
-            configuration["CORS_ORIGINS"]
-            ?? Environment.GetEnvironmentVariable("CORS_ORIGINS");
+        var origins = configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>();
 
-        if (string.IsNullOrWhiteSpace(allowedOriginsRaw))
+        if (origins is null || origins.Length == 0)
         {
             throw new InvalidOperationException(
-                "CORS_ORIGINS is not configured. CORS cannot be initialized.");
+                "Cors:AllowedOrigins is not configured.");
         }
-
-        var allowedOrigins = allowedOriginsRaw
-            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
         services.AddCors(options =>
         {
-            options.AddPolicy(FrontendPolicyName, policy =>
+            options.AddPolicy(FrontendPolicy, policy =>
             {
                 policy
-                    .WithOrigins(allowedOrigins)
+                    .WithOrigins(origins)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
         });
-
         return services;
     }
 
-    public static IApplicationBuilder UseCorsConfiguration(this IApplicationBuilder app)
+    public static WebApplication UseCorsConfiguration(
+        this WebApplication app)
     {
-        app.UseCors(FrontendPolicyName);
+        app.UseCors(FrontendPolicy);
         return app;
     }
 }

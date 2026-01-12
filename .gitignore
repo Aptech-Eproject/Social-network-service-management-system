@@ -1,9 +1,10 @@
 # ========================
 # Environment / Secrets
 # ========================
-.env
 appsettings.*.json
+!appsettings.example.json
 
+.env
 # ========================
 # OS / IDE
 # ========================
@@ -24,11 +25,15 @@ project.assets.json
 project.nuget.cache
 
 # ========================
-# NodeJS
+# NodeJS 
 # ========================
-node_modules/
-
+**/node_modules/
+**/.next/
 # ========================
 # Logs
 # ========================
 *.log
+#=========================
+# package-lock root repo
+#=========================
+/package-lock.json
