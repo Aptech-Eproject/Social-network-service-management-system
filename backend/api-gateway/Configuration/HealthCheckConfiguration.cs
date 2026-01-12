@@ -3,23 +3,23 @@ namespace api_gateway.Configuration;
 public static class HealthCheckConfiguration
 {
     public static IServiceCollection AddHealthCheckServices(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    this IServiceCollection services,
+    IConfiguration configuration,
+    IWebHostEnvironment env)
     {
-        var userServiceUrl = configuration["Services:User:BaseUrl"];
-        var socialServiceUrl = configuration["Services:Social:BaseUrl"];
+        services.AddHealthChecks();
 
-        if (string.IsNullOrWhiteSpace(userServiceUrl) ||
-            string.IsNullOrWhiteSpace(socialServiceUrl))
+        if (!env.IsDevelopment())
         {
-            throw new InvalidOperationException(
-                "Service base URLs are not configured for health checks.");
-        }
+            var userServiceUrl = configuration["Services:User:BaseUrl"];
+            var socialServiceUrl = configuration["Services:Social:BaseUrl"];
 
-        services.AddHealthChecks()
-            .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
-            .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
+            services.AddHealthChecks()
+                .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
+                .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
+        }
 
         return services;
     }
+
 }
