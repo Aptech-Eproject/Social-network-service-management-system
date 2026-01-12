@@ -1,7 +1,5 @@
 services:
-  # ============================================
-  # 🚪 API GATEWAY - Public
-  # ============================================
+  # API GATEWAY - Public
   api-gateway:
     image: minhtri269/snms-api-gateway:dev-latest
     container_name: snms-gateway-dev
@@ -11,36 +9,29 @@ services:
       - ../../backend/api-gateway:/app
       - gateway_bin:/app/bin
       - gateway_obj:/app/obj
-
-    env_file:
-      - ../../backend/api-gateway/.env
-
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8000
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
-
     command: dotnet watch --project api-gateway.csproj run --no-launch-profile
     depends_on:
       - user-service
       - social-service
+      - redis
     deploy:
       resources:
         limits:
           cpus: 1
-          memory: 256MB
+          memory: 512MB
         reservations:
           cpus: 0.5
-          memory: 128MB
+          memory: 256MB
     networks:
       - snms-network
-    
     restart: unless-stopped
 
-  # ============================================
-  # 👤 USER SERVICE - Internal
-  # ============================================
+  #  USER SERVICE - Internal
   user-service:
     image: minhtri269/snms-user-service:dev-latest
     container_name: snms-user-dev
@@ -50,34 +41,28 @@ services:
       - ../../backend/user-service:/app
       - user_bin:/app/bin
       - user_obj:/app/obj
-      
-    env_file:
-      - ../../backend/user-service/.env
-    
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8081
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
-    
     command: dotnet watch --project user-service.csproj run --no-launch-profile
-    
+    depends_on:
+      - sqlserver
+      - redis
     networks:
       - snms-network
     deploy:
       resources:
         limits:
           cpus: 0.5
-          memory: 256MB
+          memory: 512MB
         reservations:
           cpus: 0.25
-          memory: 128MB
-    
+          memory: 256MB
     restart: unless-stopped
 
-  # ============================================
-  # 🌐 SOCIAL SERVICE - Internal
-  # ============================================
+  # SOCIAL SERVICE - Internal
   social-service:
     image: minhtri269/snms-social-service:dev-latest
     container_name: snms-social-dev
@@ -87,33 +72,28 @@ services:
       - ../../backend/social-service:/app
       - social_bin:/app/bin
       - social_obj:/app/obj
-    
-    env_file:
-      - ../../backend/social-service/.env
-    
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8082
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
-    
     command: dotnet watch --project social-service.csproj run --no-launch-profile
-    
+    depends_on:
+      - sqlserver
+      - redis
     networks:
       - snms-network
     deploy:
       resources:
         limits:
           cpus: 0.5
-          memory: 256MB
+          memory: 512MB
         reservations:
           cpus: 0.25
-          memory: 128MB
+          memory: 256MB
     restart: unless-stopped
 
-  # ============================================
-  # 🧠 REDIS - Cache 
-  # ============================================
+  # REDIS - Cache 
   redis:
     image: redis:7-alpine
     container_name: snms-redis-dev
@@ -134,6 +114,23 @@ services:
           memory: 128MB
     restart: unless-stopped
 
+  # Database: SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_dev
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@sswordDatabase123"
+      MSSQL_PID: "Developer"
+      TZ: Asia/Ho_Chi_Mi
+    ports:
+      - "1433:1433"   
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - snms-network
+    restart: unless-stopped
+#=============================================================
 networks:
   snms-network:
     driver: bridge
@@ -147,3 +144,4 @@ volumes:
   social_bin:
   social_obj:
   redis_data:
+  sqlserver_data:

@@ -5,20 +5,20 @@ const path = require('path');
 
 const envMappings = [
   {
-    source: 'container/env/frontend/.env.example',
+    source: 'container/environment/frontend/.env.example',
     target: 'frontend/.env'
   },
   {
-    source: 'container/env/api-gateway/.env.example',
-    target: 'backend/api-gateway/.env'
+    source: 'container/environment/api-gateway/appsettings.example.json',
+    target: 'backend/api-gateway/appsettings.Development.json'
   },
   {
-    source: 'container/env/user-service/.env.example',
-    target: 'backend/user-service/.env'
+    source: 'container/environment/user-service/appsettings.example.json',
+    target: 'backend/user-service/appsettings.Development.json'
   },
   {
-    source: 'container/env/social-service/.env.example',
-    target: 'backend/social-service/.env'
+    source: 'container/environment/social-service/appsettings.example.json',
+    target: 'backend/social-service/appsettings.Development.json'
   }
 ];
 

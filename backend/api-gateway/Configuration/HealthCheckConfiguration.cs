@@ -2,15 +2,24 @@ namespace api_gateway.Configuration;
 
 public static class HealthCheckConfiguration
 {
-    public static IServiceCollection AddHealthCheckServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddHealthCheckServices(
+    this IServiceCollection services,
+    IConfiguration configuration,
+    IWebHostEnvironment env)
     {
-        var userServiceUrl = Environment.GetEnvironmentVariable("USER_SERVICE_URL") ?? "http://user-service:8081";
-        var socialServiceUrl = Environment.GetEnvironmentVariable("SOCIAL_SERVICE_URL") ?? "http://social-service:8082";
+        services.AddHealthChecks();
 
-        services.AddHealthChecks()
-            .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
-            .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
+        if (!env.IsDevelopment())
+        {
+            var userServiceUrl = configuration["Services:User:BaseUrl"];
+            var socialServiceUrl = configuration["Services:Social:BaseUrl"];
+
+            services.AddHealthChecks()
+                .AddUrlGroup(new Uri($"{userServiceUrl}/health"), "user-service")
+                .AddUrlGroup(new Uri($"{socialServiceUrl}/health"), "social-service");
+        }
 
         return services;
     }
+
 }

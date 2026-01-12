@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Text.Json;
 
 namespace api_gateway.Extensions;
@@ -10,6 +11,10 @@ public static class HealthCheckEndpoints
         app.MapGet("/health", () => Results.Ok(new { status = "healthy", service = "api-gateway" }));
         app.MapHealthChecks("/health/check", new HealthCheckOptions
         {
+            ResultStatusCodes = {
+                [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                [HealthStatus.Degraded] = StatusCodes.Status503ServiceUnavailable,
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable },
             ResponseWriter = async (context, report) =>
             {
                 context.Response.ContentType = "application/json";

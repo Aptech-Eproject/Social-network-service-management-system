@@ -1,7 +1,3 @@
-using DotNetEnv;
-
-Env.Load();
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
