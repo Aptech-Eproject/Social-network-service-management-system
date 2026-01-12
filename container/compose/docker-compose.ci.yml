@@ -18,10 +18,8 @@ services:
     networks:
       - snms-network
     depends_on:
-      user-service:
-        condition: service_healthy
-      social-service:
-        condition: service_healthy
+      - user-service
+      - social-service
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 10s
@@ -47,12 +45,6 @@ services:
       ASPNETCORE_URLS: http://+:8081
     networks:
       - snms-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
 
   # ============================================
   # 🌐 SOCIAL SERVICE - Internal
@@ -66,18 +58,12 @@ services:
     expose:
       - "8082"
     volumes:
-      - ../../backend/cocial-service/appsettings.Development.json:/app/appsettings.Development.json:ro
+      - ../../backend/social-service/appsettings.Development.json:/app/appsettings.Development.json:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8082
     networks:
       - snms-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
 
 networks:
   snms-network:

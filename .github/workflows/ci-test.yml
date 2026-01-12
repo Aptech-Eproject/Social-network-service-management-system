@@ -29,25 +29,20 @@ jobs:
         run: |
           docker compose -f container/compose/docker-compose.ci.yml up -d
       
-      - name: Wait for API Gateway health
+      - name: Wait for system health (API Gateway + dependencies)
         run: |
-          echo "Waiting for API Gateway to be healthy..."
+          echo "Waiting for system to be healthy..."
           for i in {1..30}; do
-            if curl -sf http://localhost:8000/health; then
-              echo "API Gateway is healthy"
+            if curl -sf http://localhost:8000/health/check; then
+              echo "System is healthy"
               exit 0
             fi
             sleep 2
           done
-          echo "API Gateway did not become healthy in time"
+          echo "System did not become healthy in time"
           docker compose -f container/compose/docker-compose.ci.yml ps
           docker compose -f container/compose/docker-compose.ci.yml logs
           exit 1
-      
-      - name: Health check
-        run: |
-          docker compose -f container/compose/docker-compose.ci.yml ps
-          curl -f http://localhost:8000/health || exit 1
       
       - name: Run tests
         run: |
