@@ -262,17 +262,15 @@ function ParentServiceClient() {
     const [servicesData, setServicesData] = useState<Service[]>(services);
 
     const [visibleCount, setVisibleCount] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
+    const isLoading = visibleCount < services.length;
 
     useEffect(() => {
         if (visibleCount < services.length) {
             const timer = setTimeout(() => {
                 setVisibleCount(prev => prev + 1);
-            }, 200);
+            }, 300);
 
             return () => clearTimeout(timer);
-        } else {
-            setIsLoading(false);
         }
     }, [visibleCount, services.length]);
 

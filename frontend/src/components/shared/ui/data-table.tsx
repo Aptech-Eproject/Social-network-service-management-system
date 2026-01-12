@@ -9,6 +9,7 @@ import {
     getSortedRowModel,
     useReactTable,
 
+    type Column,
     type ColumnDef,
     type ColumnFiltersState,
     type SortingState,
@@ -91,23 +92,23 @@ export const columns: ColumnDef<Ticket>[] = [
     {
         id: "select",
         header: ({ table }) => (
-        <Checkbox
-            checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) =>
-            table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Chọn tất cả"
-        />
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Chọn tất cả"
+            />
         ),
         cell: ({ row }) => (
-        <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Chọn dòng"
-        />
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Chọn dòng"
+            />
         ),
         enableSorting: false,
         enableHiding: false,
@@ -131,19 +132,19 @@ export const columns: ColumnDef<Ticket>[] = [
     {
         accessorKey: "status",
         header: ({ column }) => (
-        <Button
-            className="font-bold text-[13px]!"
-            variant="ghost"
-            onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "asc")
-            }
-        >
-            Trạng thái
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+            <Button
+                className="font-bold text-[13px]!"
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === "asc")
+                }
+            >
+                Trạng thái
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
         ),
         cell: ({ row }) => (
-        <span className="capitalize">{row.getValue("status")}</span>
+            <span className="capitalize">{row.getValue("status")}</span>
         ),
     },
     {
@@ -159,13 +160,13 @@ export const columns: ColumnDef<Ticket>[] = [
         header: "",
         enableHiding: false,
         cell: ({ row }) => {
-        const ticket = row.original
+            const ticket = row.original
 
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreHorizontal className="h-4 w-4" />
+                            <MoreHorizontal className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
 
@@ -173,11 +174,11 @@ export const columns: ColumnDef<Ticket>[] = [
                         <DropdownMenuLabel>Hành động</DropdownMenuLabel>
 
                         <DropdownMenuItem
-                        onClick={() =>
-                            navigator.clipboard.writeText(ticket.id)
-                        }
+                            onClick={() =>
+                                navigator.clipboard.writeText(ticket.id)
+                            }
                         >
-                        Copy ID
+                            Copy ID
                         </DropdownMenuItem>
 
                         <DropdownMenuSeparator />
@@ -186,7 +187,7 @@ export const columns: ColumnDef<Ticket>[] = [
                         <DropdownMenuItem>Chỉnh sửa</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-            ) 
+            )
         },
     },
 ]
@@ -195,19 +196,19 @@ function SortableHeader({
     column,
     title,
 }: {
-    column: any
+    column: Column<Ticket, unknown>,
     title: string
 }) {
     return (
         <Button
-        variant="ghost"
-        className="px-0 font-bold text-[13px]"
-        onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "asc")
-        }
+            variant="ghost"
+            className="px-0 font-bold text-[13px]"
+            onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+            }
         >
-        {title}
-        <ArrowUpDown className="ml-2 h-4 w-4" />
+            {title}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
     )
 }
@@ -224,12 +225,12 @@ export function DataTableDemo() {
         data,
         columns,
         state: {
-        sorting,
-        columnFilters,
-        columnVisibility,
-        rowSelection,
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
         },
-        
+
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
@@ -246,47 +247,47 @@ export function DataTableDemo() {
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                            <TableHead key={header.id}>
-                                {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
-                                    )}
-                            </TableHead>
-                            ))}
-                        </TableRow>
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                ))}
+                            </TableRow>
                         ))}
                     </TableHeader>
 
                     <TableBody>
                         {table.getRowModel().rows.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                            key={row.id}
-                            data-state={row.getIsSelected() && "selected"}
-                            >
-                            {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                                </TableCell>
-                            ))}
-                            </TableRow>
-                        ))
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
                         ) : (
-                        <TableRow>
-                            <TableCell
-                            colSpan={columns.length}
-                            className="h-24 text-center"
-                            >
-                            Không có dữ liệu
-                            </TableCell>
-                        </TableRow>
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    Không có dữ liệu
+                                </TableCell>
+                            </TableRow>
                         )}
                     </TableBody>
                 </Table>
@@ -295,26 +296,26 @@ export function DataTableDemo() {
             {/* Pagination */}
             <div className="flex items-center justify-end space-x-2 py-4 px-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} /{" "}
-                {table.getFilteredRowModel().rows.length} dòng được chọn
+                    {table.getFilteredSelectedRowModel().rows.length} /{" "}
+                    {table.getFilteredRowModel().rows.length} dòng được chọn
                 </div>
 
                 <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
                 >
-                Trước
+                    Trước
                 </Button>
 
                 <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
                 >
-                Sau
+                    Sau
                 </Button>
             </div>
         </div>

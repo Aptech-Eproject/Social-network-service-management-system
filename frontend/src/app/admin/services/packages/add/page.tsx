@@ -28,12 +28,38 @@ interface InfoBoxType {
     seo: string
 }
 
+type FormDataType = {
+    serviceName: string;
+    category: string;
+    serviceType: string;
+    description: string;
+    status: boolean;
+    apiProvider: string;
+    apiId: string;
+    dripfeed: boolean;
+    refill: boolean;
+    cancelable: boolean;
+    autoComplete: boolean;
+    completionTime: string;
+    syncPrice: boolean;
+    originalPrice: string;
+    retailPrice: string;
+    collabPrice: string;
+    agentPrice: string;
+    distributorPrice: string;
+    syncQuantity: boolean;
+    minQuantity: string;
+    maxQuantity: string;
+    createdDate: string;
+    lastUpdated: string;
+};
+
 const AddPackagePage = () => {
     const titlePage = "thêm gói dịch vụ";
     const prevTitle = "quản lý gói dịch vụ"
     const prevTitlePage = "/admin/services/packages"
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormDataType>({
         serviceName: '',
         category: '',
         serviceType: 'default', description: '',
@@ -58,7 +84,16 @@ const AddPackagePage = () => {
         lastUpdated: '2025-12-27 19:49:21'
     });
 
-    const handleChange = (field: string, value: any) => setFormData(prev => ({ ...prev, [field]: value }));
+    const handleChange = <K extends keyof FormDataType>(
+        field: K,
+        value: FormDataType[K]
+    ) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value,
+        }));
+    };
+
     const handleSubmit = () => console.log('Form submitted:', formData);
     const [infoBoxMessage, setInfoBoxMessage] = useState("");
 
@@ -198,10 +233,10 @@ const AddPackagePage = () => {
                             {/* Price Input */}
                             <div className="grid grid-cols-2 gap-6 px-6 pb-6">
                                 {[
-                                    { label: 'Giá vốn', icon: '📦', color: 'amber', field: 'originalPrice', placeholder: '16.632' },
-                                    { label: 'Giá bán lẻ', icon: '🏪', color: 'green', field: 'retailPrice', placeholder: '18.2952' },
-                                    { label: 'Giá Cộng tác viên', badge: 'VIP1', color: 'purple', field: 'collabPrice', placeholder: '16.632' },
-                                    { label: 'Giá Đại lý', badge: 'VIP2', color: 'blue', field: 'agentPrice', placeholder: '16.632' }
+                                    { label: 'Giá vốn', icon: '📦', color: 'amber', field: 'originalPrice' as keyof FormDataType, placeholder: '16.632' },
+                                    { label: 'Giá bán lẻ', icon: '🏪', color: 'green', field: 'retailPrice' as keyof FormDataType, placeholder: '18.2952' },
+                                    { label: 'Giá Cộng tác viên', badge: 'VIP1', color: 'purple', field: 'collabPrice' as keyof FormDataType, placeholder: '16.632' },
+                                    { label: 'Giá Đại lý', badge: 'VIP2', color: 'blue', field: 'agentPrice' as keyof FormDataType, placeholder: '16.632' }
                                 ].map((item, i) => (
                                     <div key={i}>
                                         <label className="flex items-center gap-1 text-sm font-bold text-gray-800 mb-2">
@@ -275,8 +310,8 @@ const AddPackagePage = () => {
                             {/* Quantity Input */}
                             <div className="grid grid-cols-2 gap-4 px-6 pb-6">
                                 {[
-                                    { label: '↓ Số lượng tối thiểu', badge: 'MIN', color: 'teal', field: 'minQuantity', placeholder: '10' },
-                                    { label: '↑ Số lượng tối đa', badge: 'MAX', color: 'red', field: 'maxQuantity', placeholder: '100000' }
+                                    { label: '↓ Số lượng tối thiểu', badge: 'MIN', color: 'teal', field: 'minQuantity' as keyof FormDataType, placeholder: '10' },
+                                    { label: '↑ Số lượng tối đa', badge: 'MAX', color: 'red', field: 'maxQuantity' as keyof FormDataType, placeholder: '100000' }
                                 ].map((item, i) => (
                                     <div key={i}>
                                         <label className="flex items-center gap-1 text-sm font-bold text-gray-800 mb-2">
