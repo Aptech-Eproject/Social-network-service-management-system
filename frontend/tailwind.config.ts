@@ -1,11 +1,12 @@
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: "class", 
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -22,5 +23,5 @@ export default {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [daisyui],
 } satisfies Config;

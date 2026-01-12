@@ -6596,6 +6596,10 @@
     min-width: calc(var(--spacing) * 55);
   }
 
+  .min-w-65 {
+    min-width: calc(var(--spacing) * 65);
+  }
+
   .min-w-75 {
     min-width: calc(var(--spacing) * 75);
   }
@@ -6606,10 +6610,6 @@
 
   .min-w-\[8rem\] {
     min-width: 8rem;
-  }
-
-  .min-w-\[260px\] {
-    min-width: 260px;
   }
 
   .min-w-\[650px\] {

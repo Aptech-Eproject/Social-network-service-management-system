@@ -1,3 +1,6 @@
 {
-  "/(client-panel)/profile/personal-details/page": "app/(client-panel)/profile/personal-details/page.js"
+  "/(client-panel)/create-order/page": "app/(client-panel)/create-order/page.js",
+  "/(client-panel)/home/page": "app/(client-panel)/home/page.js",
+  "/(client-panel)/profile/personal-details/page": "app/(client-panel)/profile/personal-details/page.js",
+  "/(client-panel)/recharge/page": "app/(client-panel)/recharge/page.js"
 }

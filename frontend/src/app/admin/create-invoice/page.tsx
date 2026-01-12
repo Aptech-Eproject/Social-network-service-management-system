@@ -1,21 +1,21 @@
 "use client"
 
-import { 
-    CircleQuestionMark, 
-    Eye, 
+import {
+    CircleQuestionMark,
+    Eye,
     Save
 } from "lucide-react";
 
 import { Label } from "@/components/shared/ui/label";
 import { Input } from "@/components/shared/ui/input";
 import { QuantityInput } from "@/components/shared/ui/input-number-action";
-import { 
-    Select, 
-    SelectContent, 
-    SelectGroup, 
-    SelectItem, 
-    SelectLabel, 
-    SelectTrigger, 
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
     SelectValue
 } from "@/components/shared/ui/select";
 import { InvoiceCreateTable } from "@/components/shared/ui/invoice-create-table";
@@ -53,9 +53,9 @@ function CreateInvoice() {
                                 <Label htmlFor="invoice-number">
                                     Mã hóa đơn
                                 </Label>
-                                <Input 
-                                    type="text" 
-                                    id="invoice-number" 
+                                <Input
+                                    type="text"
+                                    id="invoice-number"
                                     placeholder="WP-3434434"
                                 />
                             </div>
@@ -65,9 +65,9 @@ function CreateInvoice() {
                                 <Label htmlFor="customer-name">
                                     Tên khách hàng
                                 </Label>
-                                <Input 
-                                    type="text" 
-                                    id="customer-name" 
+                                <Input
+                                    type="text"
+                                    id="customer-name"
                                     placeholder="Nguyen Van A"
                                 />
                             </div>
@@ -80,9 +80,9 @@ function CreateInvoice() {
                                 <Label htmlFor="address-customer">
                                     Địa chỉ khách hàng
                                 </Label>
-                                <Input 
-                                    type="text" 
-                                    id="address-customer" 
+                                <Input
+                                    type="text"
+                                    id="address-customer"
                                     placeholder="Nhập địa chỉ của khách hàng"
                                 />
                             </div>
@@ -102,26 +102,26 @@ function CreateInvoice() {
                                 {/* Product & Price Input */}
                                 <div className="flex items-center justify-between gap-4 w-full">
                                     {/* Product Name */}
-                                    <div className="grid items-center gap-3 min-w-[260px]">
+                                    <div className="grid items-center gap-3 min-w-65">
                                         <Label htmlFor="invoice-number">
                                             Tên sản phẩm
                                         </Label>
-                                        <Input 
-                                            type="text" 
-                                            id="product-" 
+                                        <Input
+                                            type="text"
+                                            id="product-"
                                             placeholder="Nhập tên sản phẩm"
                                             className="border-gray-300 bg-white"
                                         />
                                     </div>
 
                                     {/* Product Price */}
-                                    <div className="grid items-center gap-3 min-w-[260px]">
+                                    <div className="grid items-center gap-3 min-w-65">
                                         <Label htmlFor="product-price">
                                             Giá tiền
                                         </Label>
-                                        <Input 
-                                            type="number" 
-                                            id="product-price" 
+                                        <Input
+                                            type="number"
+                                            id="product-price"
                                             placeholder="Nhập giá sản phẩm"
                                             className="border-gray-300 bg-white"
                                         />
@@ -138,7 +138,7 @@ function CreateInvoice() {
                                         min={1}
                                         max={100}
                                         onChange={(val) => console.log("Quantity:", val)}
-                                        // className="w-full"
+                                    // className="w-full"
                                     />
                                 </div>
 
@@ -165,16 +165,16 @@ function CreateInvoice() {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                </div>    
-                            </div>    
+                                </div>
+                            </div>
 
                             {/* Notes */}
                             <div className="flex items-center gap-2 text-slate-600 text-xs">
                                 <CircleQuestionMark className="w-4 h-4" />
                                 <span>
-                                    Sau khi điền đầy đủ thông tin sản phẩm, nhấn Enter/Return hoặc nhấp vào 'Thêm sản phẩm' để thêm sản phẩm vào danh sách.
+                                    Sau khi điền đầy đủ thông tin sản phẩm, nhấn Enter/Return hoặc nhấp vào mục Thêm sản phẩm để thêm sản phẩm vào danh sách.
                                 </span>
-                            </div>    
+                            </div>
 
                             {/* Add Button */}
                             <div className="w-full flex justify-end py-2">
@@ -220,13 +220,13 @@ function CreateInvoice() {
 
                             {/* Total */}
                             <div className="flex items-center w-full">
-                            <span className="text-black text-sm font-medium">
-                                Tổng tiền:
-                            </span>
-                            <div className="flex-1" />
-                            <span className="text-black text-sm font-medium">
-                                $4235.00
-                            </span>
+                                <span className="text-black text-sm font-medium">
+                                    Tổng tiền:
+                                </span>
+                                <div className="flex-1" />
+                                <span className="text-black text-sm font-medium">
+                                    $4235.00
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -235,22 +235,22 @@ function CreateInvoice() {
                     <div className="w-full px-6 py-8 flex items-center justify-end gap-3">
                         {/* Preview Button */}
                         <button
-                                className="flex items-center gap-2 cursor-pointer px-4 py-3 border border-gray-300 rounded-sm hover:bg-slate-100 transition-colors duration-300"
-                            >
-                                <Eye className="w-4 h-4" />
-                                <span className="text-sm font-medium">
-                                    Xem trước hóa đơn
-                                </span>
+                            className="flex items-center gap-2 cursor-pointer px-4 py-3 border border-gray-300 rounded-sm hover:bg-slate-100 transition-colors duration-300"
+                        >
+                            <Eye className="w-4 h-4" />
+                            <span className="text-sm font-medium">
+                                Xem trước hóa đơn
+                            </span>
                         </button>
 
                         {/* Add Invoice Button */}
                         <button
-                                className="bg-[#5f73ff] flex items-center gap-2 cursor-pointer px-4 py-3 rounded-sm hover:opacity-80 transition-all duration-300"
-                            >
-                                <Save className="w-4 h-4 text-slate-200" />
-                                <span className="text-sm font-medium text-slate-200">
-                                    Thêm hóa đơn
-                                </span>
+                            className="bg-[#5f73ff] flex items-center gap-2 cursor-pointer px-4 py-3 rounded-sm hover:opacity-80 transition-all duration-300"
+                        >
+                            <Save className="w-4 h-4 text-slate-200" />
+                            <span className="text-sm font-medium text-slate-200">
+                                Thêm hóa đơn
+                            </span>
                         </button>
                     </div>
                 </div>

@@ -76,10 +76,10 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
                     <div className="bg-slate-800/20 border border-slate-700/30 rounded-lg p-6 mt-12">
                         <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                            "LikesubVIP đã thay đổi cách chúng tôi quản lý sự
+                            {`"LikesubVIP đã thay đổi cách chúng tôi quản lý sự
                             hiện diện trên mạng xã hội của mình. Số liệu phân
                             tích thật đáng kinh ngạc và nhóm hỗ trợ luôn có mặt
-                            khi chúng tôi cần."
+                            khi chúng tôi cần."`}
                         </p>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-linear-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
@@ -96,7 +96,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Right side - Form */}
                 {children}
             </div>

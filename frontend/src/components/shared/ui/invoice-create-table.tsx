@@ -11,6 +11,7 @@ import {
     type ColumnFiltersState,
     type SortingState,
     type VisibilityState,
+    type Column,
 } from "@tanstack/react-table"
 
 import { ArrowUpDown, Trash2 } from "lucide-react"
@@ -31,7 +32,7 @@ export type Product = {
     name: string
     quantity: number
     unitCost: number
-    discount: number 
+    discount: number
     total: number
 }
 
@@ -104,14 +105,14 @@ export const columns: ColumnDef<Product>[] = [
         enableHiding: false,
         cell: ({ row }) => {
 
-        const ticket = row.original
+            const ticket = row.original
             return (
                 <button
                     className="cursor-pointer"
                 >
                     <Trash2 className="w-4.5 h-4.5 hover:text-red-500 transition-colors duration-200" />
                 </button>
-            ) 
+            )
         },
     },
 ]
@@ -120,19 +121,19 @@ function SortableHeader({
     column,
     title,
 }: {
-    column: any
+    column: Column<Product>,
     title: string
 }) {
     return (
         <Button
-        variant="ghost"
-        className="px-0 font-bold text-[13px]"
-        onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "asc")
-        }
+            variant="ghost"
+            className="px-0 font-bold text-[13px]"
+            onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+            }
         >
-        {title}
-        <ArrowUpDown className="ml-2 h-4 w-4" />
+            {title}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
     )
 }
@@ -149,12 +150,12 @@ export function InvoiceCreateTable() {
         data,
         columns,
         state: {
-        sorting,
-        columnFilters,
-        columnVisibility,
-        rowSelection,
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
         },
-        
+
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
@@ -173,14 +174,14 @@ export function InvoiceCreateTable() {
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                        header.column.columnDef.header,
-                                        header.getContext()
-                                        )}
-                                </TableHead>
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
                                 ))}
                             </TableRow>
                         ))}
@@ -188,30 +189,30 @@ export function InvoiceCreateTable() {
 
                     <TableBody>
                         {table.getRowModel().rows.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                            key={row.id}
-                            data-state={row.getIsSelected() && "selected"}
-                            >
-                            {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                                </TableCell>
-                            ))}
-                            </TableRow>
-                        ))
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
                         ) : (
-                        <TableRow>
-                            <TableCell
-                            colSpan={columns.length}
-                            className="h-24 text-center"
-                            >
-                            Không có dữ liệu
-                            </TableCell>
-                        </TableRow>
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    Không có dữ liệu
+                                </TableCell>
+                            </TableRow>
                         )}
                     </TableBody>
                 </Table>
