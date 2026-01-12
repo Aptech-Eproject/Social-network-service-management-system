@@ -18,6 +18,7 @@ services:
     depends_on:
       - user-service
       - social-service
+      - redis
     deploy:
       resources:
         limits:
@@ -46,6 +47,9 @@ services:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     command: dotnet watch --project user-service.csproj run --no-launch-profile
+    depends_on:
+      - sqlserver
+      - redis
     networks:
       - snms-network
     deploy:
@@ -74,6 +78,9 @@ services:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     command: dotnet watch --project social-service.csproj run --no-launch-profile
+    depends_on:
+      - sqlserver
+      - redis
     networks:
       - snms-network
     deploy:
