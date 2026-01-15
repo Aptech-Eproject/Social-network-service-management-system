@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/global.css";
 import { SidebarProvider } from "@/contexts/shared/SidebarContext";
+import { inter } from "@/font";
 
 export const runtime = 'edge';
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi" className={inter.variable}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

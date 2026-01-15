@@ -2,9 +2,9 @@
 
 import UserSubHeader from "@/layouts/client/client-panel/UserSubHeader";
 import HomeStatisticsCards from "@/components/client/client-panel/HomeStatisticsCards";
-import HomeOrderStatistics from "@/components/client/client-panel/HomeOrderStatistics";
 import HomePromotionalBanner from "@/components/client/client-panel/HomePromotionalBanner";
 import HomeRecentOrders from "@/components/client/client-panel/HomeRecentOrders";
+import HomeNewsFeed from "@/components/client/client-panel/HomeNewsFeed";
 
 interface RecentOrder {
     id: string;
@@ -101,10 +101,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-4">
                         <HomeStatisticsCards totalOrders={totalOrders} />
-                        <HomeOrderStatistics
-                            totalOrders={totalOrders}
-                            orderStats={MOCK_ORDER_STATS}
-                        />
+                        <HomeNewsFeed />
                     </div>
 
                     <div className="space-y-6 lg:col-span-1">

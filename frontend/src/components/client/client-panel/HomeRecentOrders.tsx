@@ -28,11 +28,11 @@ export default function HomeRecentOrders({ orders }: HomeRecentOrdersProps) {
                 </a>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-8">
                 {orders.map((order, idx) => (
                     <div
                         key={order.id}
-                        className="rounded border border-gray-200 bg-gray-50 p-3 transition-all hover:border-gray-300 hover:shadow-sm"
+                        className="rounded-sm transition-all hover:border-gray-300"
                     >
                         <div className="flex items-start gap-3">
                             <div className="w-2.5 h-2.5 mt-1 rounded-full bg-blue-500" />
@@ -44,12 +44,12 @@ export default function HomeRecentOrders({ orders }: HomeRecentOrdersProps) {
                                     {order.serviceName}
                                 </p>
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-red-600 font-semibold">
+                                    <span className="text-sm text-gray-600 leading-relaxed line-clamp-2">
                                         Số lượng: {order.quantity}
                                     </span>
-                                    <span className="font-semibold text-blue-600">
-                                        Giá tiền: đ
-                                        {order.price.toLocaleString("vi-VN")}
+                                    <span className="text-sm text-gray-600 leading-relaxed line-clamp-2">
+                                        Giá tiền:{" "}
+                                        {order.price.toLocaleString("vi-VN")}đ
                                     </span>
                                 </div>
                             </div>
