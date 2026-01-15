@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
     Heart,
@@ -140,8 +140,17 @@ export default function HomeNewsFeed() {
     const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
     const [isLoadingLoadMore, setIsLoadingLoadMore] = useState(false);
+    const [isLoadingPosts, setIsLoadingPosts] = useState(true);
 
     const visiblePosts = posts.slice(0, visibleCount);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoadingPosts(false);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleLike = (postId: string) => {
         setPosts((prevPosts) =>
@@ -194,96 +203,102 @@ export default function HomeNewsFeed() {
 
             {/* Blog Posts */}
             <div className="divide-y divide-gray-200">
-                {visiblePosts.map((post) => (
-                    <div
-                        key={post.id}
-                        className="p-6 hover:bg-gray-50/50 transition-all duration-200 group"
-                    >
-                        {/* Author Info */}
-                        <div className="flex items-center gap-3 mb-4">
-                            <img
-                                src={post.author.avatar}
-                                alt={post.author.name}
-                                className="w-10 h-10 rounded-full border-2 border-gray-200"
-                            />
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-sm font-semibold text-gray-900">
-                                        {post.author.name}
-                                    </span>
-                                    <span className="text-xs text-gray-400">•</span>
-                                    <span className="text-xs text-gray-500">
-                                        {post.author.role}
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-2 mt-0.5">
-                                    <span className="text-xs text-gray-500">
-                                        {post.createdAt}
-                                    </span>
-                                    {post.badge && (
-                                        <>
-                                            <span className="text-xs text-gray-400">•</span>
-                                            <span
-                                                className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${getBadgeStyle(
-                                                    post.badge
-                                                )}`}
-                                            >
-                                                {post.badge === "trending" && (
-                                                    <TrendingUp className="w-3 h-3" />
-                                                )}
-                                                {post.badge === "trending" ? "Trending" : "Mới"}
-                                            </span>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                            <span className="text-xs font-medium text-gray-600 bg-gray-200 px-3 py-1 rounded-full">
-                                {post.category}
-                            </span>
-                        </div>
-
-                        {/* Content */}
-                        <div className="mb-4">
-                            <h3 className="text-base font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors cursor-pointer">
-                                {post.title}
-                            </h3>
-                            <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
-                                {post.description}
-                            </p>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex items-center gap-6">
-                            <button
-                                onClick={() => handleLike(post.id)}
-                                className={`flex items-center gap-2 text-sm font-medium transition-all cursor-pointer ${post.isLiked
-                                    ? "text-gray-900"
-                                    : "text-gray-500 hover:text-gray-900"
-                                    }`}
-                            >
-                                <Heart
-                                    className={`w-4 h-4 transition-all ${post.isLiked ? "fill-gray-900" : ""
-                                        }`}
-                                />
-                                <span>{post.likes}</span>
-                            </button>
-
-                            <button className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors cursor-pointer">
-                                <MessageCircle className="w-4 h-4" />
-                                <span>{post.comments}</span>
-                            </button>
-
-                            <button className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors ml-auto cursor-pointer">
-                                <Share2 className="w-4 h-4" />
-                                <span className="text-xs">Chia sẻ</span>
-                            </button>
-                        </div>
+                {isLoadingPosts ? (
+                    <div className="flex items-center justify-center py-20">
+                        <LoaderCircle className="w-10 h-10 text-slate-800 animate-spin" />
                     </div>
-                ))}
+                ) : (
+                    visiblePosts.map((post) => (
+                        <div
+                            key={post.id}
+                            className="p-6 hover:bg-gray-50/50 transition-all duration-200 group"
+                        >
+                            {/* Author Info */}
+                            <div className="flex items-center gap-3 mb-4">
+                                <img
+                                    src={post.author.avatar}
+                                    alt={post.author.name}
+                                    className="w-10 h-10 rounded-full border-2 border-gray-200"
+                                />
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm font-semibold text-gray-900">
+                                            {post.author.name}
+                                        </span>
+                                        <span className="text-xs text-gray-400">•</span>
+                                        <span className="text-xs text-gray-500">
+                                            {post.author.role}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 mt-0.5">
+                                        <span className="text-xs text-gray-500">
+                                            {post.createdAt}
+                                        </span>
+                                        {post.badge && (
+                                            <>
+                                                <span className="text-xs text-gray-400">•</span>
+                                                <span
+                                                    className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${getBadgeStyle(
+                                                        post.badge
+                                                    )}`}
+                                                >
+                                                    {post.badge === "trending" && (
+                                                        <TrendingUp className="w-3 h-3" />
+                                                    )}
+                                                    {post.badge === "trending" ? "Trending" : "Mới"}
+                                                </span>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                                <span className="text-xs font-medium text-gray-600 bg-gray-200 px-3 py-1 rounded-full">
+                                    {post.category}
+                                </span>
+                            </div>
+
+                            {/* Content */}
+                            <div className="mb-4">
+                                <h3 className="text-base font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors cursor-pointer">
+                                    {post.title}
+                                </h3>
+                                <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
+                                    {post.description}
+                                </p>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex items-center gap-6">
+                                <button
+                                    onClick={() => handleLike(post.id)}
+                                    className={`flex items-center gap-2 text-sm font-medium transition-all cursor-pointer ${post.isLiked
+                                        ? "text-gray-900"
+                                        : "text-gray-500 hover:text-gray-900"
+                                        }`}
+                                >
+                                    <Heart
+                                        className={`w-4 h-4 transition-all ${post.isLiked ? "fill-gray-900" : ""
+                                            }`}
+                                    />
+                                    <span>{post.likes}</span>
+                                </button>
+
+                                <button className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors cursor-pointer">
+                                    <MessageCircle className="w-4 h-4" />
+                                    <span>{post.comments}</span>
+                                </button>
+
+                                <button className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors ml-auto cursor-pointer">
+                                    <Share2 className="w-4 h-4" />
+                                    <span className="text-xs">Chia sẻ</span>
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
 
             {/* Footer */}
-            {visibleCount < ALL_POSTS.length && (
+            {!isLoadingPosts && visibleCount < ALL_POSTS.length && (
                 <div className="p-4 border-t border-gray-200 text-center">
                     <button
                         onClick={handleLoadMore}
@@ -292,7 +307,7 @@ export default function HomeNewsFeed() {
                     >
                         {isLoadingLoadMore ? (
                             <>
-                                <LoaderCircle className="w-5 h-5 animate-spin" />
+                                <LoaderCircle className="w-5 h-5 text-slate-800 animate-spin" />
                                 Đang tải...
                             </>
                         ) : (
