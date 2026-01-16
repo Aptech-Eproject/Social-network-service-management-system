@@ -1,11 +1,9 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+export type StatusStyle = {
+    bg: string;
+    text: string;
+    icon: string
+};
 
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
-
-export type StatusStyle = { bg: string; text: string; icon: string };
 export const STATUS_CONFIG: Record<string, StatusStyle> = {
     "Hoàn thành": { bg: "bg-green-100", text: "text-green-800", icon: "✓" },
     "Đang chờ": { bg: "bg-yellow-100", text: "text-yellow-800", icon: "⏱" },
@@ -23,7 +21,11 @@ export function getStatusConfig(status: string): StatusStyle {
     );
 }
 
-export type PaymentStyle = { bg: string; text: string };
+export type PaymentStyle = {
+    bg: string;
+    text: string
+};
+
 export const PAYMENT_CONFIG: Record<string, PaymentStyle> = {
     "Hoàn thành": { bg: "bg-green-100", text: "text-green-800" },
     "Đang chờ": { bg: "bg-yellow-100", text: "text-yellow-800" },

@@ -1,8 +1,8 @@
 "use client";
 import { FlagOff } from "lucide-react";
-import { STATUS_CONFIG } from "@/lib/utils";
 import { useState } from "react";
 import type { OrderItem } from "@/types/order";
+import { STATUS_CONFIG } from "@/utils/status.order-history.util";
 
 interface OrderHistoriesTableProps {
     orders: OrderItem[];
