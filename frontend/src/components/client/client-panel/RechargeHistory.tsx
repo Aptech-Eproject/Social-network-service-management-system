@@ -1,4 +1,7 @@
-import { History, ScanSearch, Shredder, Trash2 } from "lucide-react";
+"use client"
+
+import { History, ScanSearch, Trash2 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 function formatVND(value: number) {
     if (Number.isNaN(value)) return "0đ";
@@ -20,6 +23,9 @@ interface RechargeHistoryProps {
 }
 
 export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
+    const [visibleRows, setVisibleRows] = useState<number>(0);
+    const [isLoaded, setIsLoaded] = useState(false);
+
     const dataTable = [
         {
             id: "689714325",
@@ -111,12 +117,9 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
             createdAt: "06/01/2026 16:10:59",
             updatedAt: "06/01/2026 16:11:40",
         },
-    ]
+    ];
 
-    const history: HistoryItem[] =
-        data.length > 0
-            ? data
-            : dataTable
+    const history: HistoryItem[] = data.length > 0 ? data : dataTable;
 
     const statusStyles: Record<string, string> = {
         "Chưa thanh toán": "bg-[#F06548] text-white",
@@ -124,16 +127,36 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
         "Chờ xử lý": "bg-[#F5B849] text-amber-900",
         "Thất bại": "bg-[#e6533c] text-white",
         "Hoàn tiền": "bg-[#846adf] text-white",
-    }
+    };
+
+    useEffect(() => {
+        // Delay nhẹ trước khi bắt đầu animation
+        const initTimer = setTimeout(() => {
+            setIsLoaded(true);
+        }, 300);
+
+        return () => clearTimeout(initTimer);
+    }, []);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+
+        // Hiển thị từng hàng với delay nhẹ
+        if (visibleRows < history.length) {
+            const timer = setTimeout(() => {
+                setVisibleRows((prev) => prev + 1);
+            }, 80); // Thời gian giữa mỗi hàng
+
+            return () => clearTimeout(timer);
+        }
+    }, [visibleRows, history.length, isLoaded]);
 
     return (
         <div className="mt-6 rounded bg-white shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900 dark:ring-neutral-800">
             <div className="p-4 flex items-center justify-between border-b border-gray-200">
                 <div className="flex items-center gap-2">
                     <History className="w-3.5 h-3.5" />
-                    <span className="text-base font-semibold">
-                        LỊCH SỬ NẠP TIỀN
-                    </span>
+                    <span className="text-base font-semibold">LỊCH SỬ NẠP TIỀN</span>
                 </div>
             </div>
 
@@ -141,13 +164,13 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
                 <div className="relative">
                     <input
                         placeholder="Mã giao dịch"
-                        className="w-full rounded border border-neutral-300 py-2.75 pl-10 pr-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-neutral-700 dark:bg-neutral-900 text-sm!"
+                        className="w-full rounded border border-neutral-300 py-2.75 pl-10 pr-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-neutral-700 dark:bg-neutral-900 text-sm"
                     />
                     <span className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-neutral-400">
                         <ScanSearch />
                     </span>
                 </div>
-                <select className="rounded border border-neutral-300 bg-white py-2 px-3 text-sm! outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-neutral-700 dark:bg-neutral-900">
+                <select className="rounded border border-neutral-300 bg-white py-2 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-neutral-700 dark:bg-neutral-900">
                     <option>-- Trạng thái --</option>
                     <option>Chưa thanh toán</option>
                     <option>Đã thanh toán</option>
@@ -156,16 +179,7 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
                 <div className="grid grid-cols-2 gap-2">
                     <input
                         type="date"
-                        className="
-                            rounded border w-46 border-neutral-300 py-2.5 px-3
-                            outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                            dark:border-neutral-700 dark:bg-neutral-900
-                            [&::-webkit-calendar-picker-indicator]:cursor-pointer
-                            [&::-webkit-calendar-picker-indicator]:invert-45
-                            [&::-webkit-calendar-picker-indicator]:sepia-0
-                            [&::-webkit-calendar-picker-indicator]:saturate-0
-                            [&::-webkit-calendar-picker-indicator]:hue-rotate-0
-                        "
+                        className="rounded border w-46 border-neutral-300 py-2.5 px-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-neutral-700 dark:bg-neutral-900"
                     />
                 </div>
                 <div className="flex items-center justify-start gap-2 ml-auto">
@@ -182,13 +196,13 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
                 <table className="min-w-225 w-full border-collapse text-sm">
                     <thead>
                         <tr className="bg-slate-100 text-left text-neutral-600 dark:bg-neutral-800/40 dark:text-neutral-300">
-                            <th className="px-3 py-3 font-bold text-[13px]">
-                                Mã giao dịch
-                            </th>
+                            <th className="px-3 py-3 font-bold text-[13px]">Mã giao dịch</th>
                             <th className="px-3 py-3 text-center font-bold text-[13px]">
                                 Trạng thái
                             </th>
-                            <th className="px-3 py-3 text-left font-bold text-[13px]">Ngân hàng</th>
+                            <th className="px-3 py-3 text-left font-bold text-[13px]">
+                                Ngân hàng
+                            </th>
                             <th className="py-3 text-right font-bold text-[13px]">
                                 Số tiền cần thanh toán
                             </th>
@@ -198,14 +212,26 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
                             <th className="px-3 py-3 font-bold text-[13px] text-center">
                                 Thời gian tạo hóa đơn
                             </th>
-                            <th className="px-3 py-3 font-bold text-[13px] text-center">Cập nhật</th>
+                            <th className="px-3 py-3 font-bold text-[13px] text-center">
+                                Cập nhật
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {history.map((h) => (
+                        {history.map((h, index) => (
                             <tr
                                 key={h.id}
-                                className="border-t border-neutral-200 dark:border-neutral-800"
+                                className={`
+                                    border-t border-neutral-200 dark:border-neutral-800
+                                    transition-all duration-500 ease-out
+                                    ${index < visibleRows
+                                        ? "opacity-100 translate-y-0"
+                                        : "opacity-0 translate-y-4"
+                                    }
+                                `}
+                                style={{
+                                    transitionDelay: `${index * 50}ms`,
+                                }}
                             >
                                 <td className="px-3 py-4">
                                     <span className="text-[#3C2D8F] px-1 py-0.5 rounded text-xs font-semibold">
@@ -215,10 +241,10 @@ export default function RechargeHistory({ data = [] }: RechargeHistoryProps) {
                                 <td className="px-3 py-4 text-center">
                                     <span
                                         className={`
-                                        inline-flex justify-end rounded
-                                        px-2 py-0.5 text-[10px] font-bold
-                                        ${statusStyles[h.status] ?? "bg-gray-400 text-white"}
-                                    `}
+                                            inline-flex justify-end rounded
+                                            px-2 py-0.5 text-[10px] font-bold
+                                            ${statusStyles[h.status] ?? "bg-gray-400 text-white"}
+                                        `}
                                     >
                                         {h.status}
                                     </span>
