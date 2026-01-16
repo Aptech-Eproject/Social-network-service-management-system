@@ -13,7 +13,7 @@ import {
 
 import { Input } from "@/components/shared/ui/input";
 import { DatePicker } from "@/components/shared/ui/date-picker";
-import { DataTableDemo } from "@/components/shared/ui/data-table";
+import { SupportRequestTable } from "@/components/shared/ui/support-request-table";
 import {
     Select,
     SelectContent,
@@ -210,7 +210,7 @@ function SupportRequestPage() {
                     </div>
 
                     {/* Table & Pagination */}
-                    <DataTableDemo />
+                    <SupportRequestTable />
                 </div>
             </div>
         </div>

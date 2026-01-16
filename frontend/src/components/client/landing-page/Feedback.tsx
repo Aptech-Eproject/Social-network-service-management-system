@@ -48,7 +48,7 @@ export default function Feedback() {
   ];
 
   return (
-    <section className="py-28 px-4 bg-white">
+    <section className="pt-28 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-semibold text-center text-gray-700 mb-6">
           User Ratings Are A Confirmation

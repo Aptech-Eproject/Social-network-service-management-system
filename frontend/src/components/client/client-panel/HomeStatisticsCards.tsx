@@ -31,7 +31,7 @@ export default function HomeStatisticsCards({
                 <div className="flex items-start justify-between">
                     <div>
                         <p className="text-sm text-gray-500 font-medium">
-                            Tổng tiền nạp tháng
+                            Tổng nạp tháng
                         </p>
                         <p className="mt-2 text-xl font-bold text-gray-900">
                             0đ

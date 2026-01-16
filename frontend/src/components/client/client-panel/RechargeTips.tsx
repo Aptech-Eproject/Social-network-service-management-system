@@ -1,8 +1,7 @@
 export default function RechargeTips() {
     return (
         <aside className="self-start rounded bg-white p-4 shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900 dark:ring-neutral-800">
-            <div className="mb-2 font-semibold">Lưu ý</div>
-            <ul className="list-disc space-y-2 pl-5 text-xs font-semibold text-neutral-700">
+            <ul className="list-disc space-y-2 pl-5 text-xs! leading-4 text-neutral-700">
                 <li>
                     Vui lòng chuyển khoản đúng số tiền và nội dung để được cộng
                     tiền tự động

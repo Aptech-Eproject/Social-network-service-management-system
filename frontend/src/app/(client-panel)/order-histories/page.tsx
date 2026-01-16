@@ -1,6 +1,8 @@
 "use client";
-import UserSubHeader from "@/layouts/client/client-panel/UserSubHeader";
+
 import type { OrderItem } from "@/types/order";
+
+import UserSubHeader from "@/layouts/client/client-panel/UserSubHeader";
 import OrderStatusCards from "@/components/client/client-panel/OrderStatusCards";
 import OrderFilters from "@/components/client/client-panel/OrderFilters";
 import OrderPaginationControls from "@/components/client/client-panel/OrderPaginationControls";
@@ -89,25 +91,25 @@ export default function OrderHistoriesClient() {
     const titlePage = "đơn hàng đã đặt";
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 overflow-x-hidden!">
             <UserSubHeader titlePage={titlePage} />
 
-            <div className="max-w-full mx-auto px-6 py-6">
-                <OrderStatusCards />
+            <div className="w-full mx-auto px-6 py-6">
+                <div className="w-full overflow-x-hidden">
+                    <OrderStatusCards />
 
-                <div className="bg-white rounded shadow-sm">
-                    <OrderFilters />
+                    <div className="bg-white rounded shadow-sm overflow-hidden">
+                        <OrderFilters />
 
-                    <OrderPaginationControls />
+                        <OrderPaginationControls />
 
-                    <div className="overflow-x-auto max-h-200 overflow-y-auto">
                         <OrderHistoriesTable
                             orders={MOCK_ORDERS}
                             itemsPerPage={10}
                         />
-                    </div>
 
-                    <OrderRevenueSummary />
+                        <OrderRevenueSummary />
+                    </div>
                 </div>
             </div>
         </div>

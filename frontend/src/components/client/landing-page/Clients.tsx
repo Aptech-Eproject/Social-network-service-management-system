@@ -29,14 +29,14 @@ export default function Clients() {
   ];
 
   return (
-    <section className="py-32 px-4 bg-blue-50">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-42 px-4 bg-blue-50">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
         {/* Left: Content */}
         <div>
           <h2 className="text-3xl w-5/6 font-semibold text-gray-700 mb-4 leading-10">
             Cung cấp dịch vụ trên tất cả các mạng xã hội
           </h2>
-          <p className="text-gray-600 text-sm font-medium mb-8 leading-relaxed">
+          <p className="text-gray-600 text-sm! font-medium mb-8 leading-relaxed">
             Bảng điều khiển dịch vụ SMM tốt nhất và rẻ nhất trực tuyến cho
             TikTok, Instagram, YouTube, Facebook, Spotify, Telegram, Twitch,
             Twitter, Lưu lượng truy cập trang web, LinkedIn, Discord và
@@ -46,6 +46,7 @@ export default function Clients() {
             View More
           </button>
         </div>
+
         {/* Right: Social Icons */}
         <div className="grid grid-cols-3 gap-8 justify-center">
           {socialIcons.map((icon) => (

@@ -86,6 +86,24 @@ const data: Ticket[] = [
         createdAt: "2024-12-30",
         updatedAt: "2024-12-31",
     },
+    {
+        id: "5",
+        title: "Cần hỗ trợ kỹ thuật",
+        orderCode: "ORD-1005",
+        topic: "Kỹ thuật",
+        status: "mới",
+        createdAt: "2025-01-07",
+        updatedAt: "2025-01-07",
+    },
+    {
+        id: "6",
+        title: "Đổi trả sản phẩm",
+        orderCode: "ORD-1006",
+        topic: "Đơn hàng",
+        status: "đang xử lý",
+        createdAt: "2025-01-06",
+        updatedAt: "2025-01-08",
+    },
 ]
 
 export const columns: ColumnDef<Ticket>[] = [
@@ -213,13 +231,14 @@ function SortableHeader({
     )
 }
 
-export function DataTableDemo() {
+export function SupportRequestTable() {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
+    const [visibleRows, setVisibleRows] = React.useState(0)
 
     const table = useReactTable({
         data,
@@ -241,9 +260,26 @@ export function DataTableDemo() {
         getFilteredRowModel: getFilteredRowModel(),
     })
 
+    // Animation effect for loading rows
+    React.useEffect(() => {
+        const totalRows = table.getRowModel().rows.length
+        let count = 0
+
+        const interval = setInterval(() => {
+            count++
+            setVisibleRows(count)
+
+            if (count >= totalRows) {
+                clearInterval(interval)
+            }
+        }, 80) // 80ms delay between each row
+
+        return () => clearInterval(interval)
+    }, [table.getRowModel().rows.length])
+
     return (
         <div className="w-full text-sm!">
-            <div className="border rounded-md !text-sm">
+            <div className="border rounded-md !text-sm overflow-hidden">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -264,10 +300,17 @@ export function DataTableDemo() {
 
                     <TableBody>
                         {table.getRowModel().rows.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row, index) => (
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
+                                    className={`transition-all duration-500 ease-out ${index < visibleRows
+                                        ? "opacity-100 translate-y-0"
+                                        : "opacity-0 translate-y-4"
+                                        }`}
+                                    style={{
+                                        transitionDelay: `${index * 50}ms`
+                                    }}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
