@@ -16,8 +16,27 @@ on:
       - container/dockerfiles/**
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            frontend:
+              - 'frontend/**'
+
   backend-lint:
     name: Backend - Lint & Format
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +57,8 @@ jobs:
 
   frontend-lint:
     name: Frontend - Lint & Type Check
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -67,15 +88,30 @@ jobs:
   # ---------------------------------------------------
   summary:
     name: Summary
-    needs: [backend-lint, frontend-lint]
+    needs: [detect-changes, backend-lint, frontend-lint]
     if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Report result
         run: |
-          if [ "${{ needs.backend-lint.result }}" != "success" ] || \
-             [ "${{ needs.frontend-lint.result }}" != "success" ]; then
-            echo "❌ Code quality checks failed"
+          backend_result="${{ needs.backend-lint.result }}"
+          frontend_result="${{ needs.frontend-lint.result }}"
+          backend_changed="${{ needs.detect-changes.outputs.backend }}"
+          frontend_changed="${{ needs.detect-changes.outputs.frontend }}"
+          
+          failed=false
+          
+          if [ "$backend_changed" == "true" ] && [ "$backend_result" != "success" ]; then
+            echo "❌ Backend checks failed"
+            failed=true
+          fi
+          
+          if [ "$frontend_changed" == "true" ] && [ "$frontend_result" != "success" ]; then
+            echo "❌ Frontend checks failed"
+            failed=true
+          fi
+          
+          if [ "$failed" == "true" ]; then
             exit 1
           else
             echo "✅ All code quality checks passed"
