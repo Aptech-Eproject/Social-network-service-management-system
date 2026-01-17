@@ -1,6 +1,8 @@
 function loading() {
     return (
-        <div>loading</div>
+        <div className="flex items-center justify-center min-h-screen h-full">
+            loading
+        </div>
     )
 }
 

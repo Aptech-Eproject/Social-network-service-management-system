@@ -1,32 +1,10 @@
-import { privateApi, publicApi } from "@/lib/axios-instance";
-import { AUTH_ENDPOINTS } from "@/constants/api.constants";
 import CookieStorage from "@/lib/cookie-storage";
 
-export interface LoginPayload {
-    email: string;
-    password: string;
-}
-
-export interface RegisterPayload {
-    email: string;
-    password: string;
-    name: string;
-}
-
-export interface LoginResponse {
-    access_token: string;
-    refresh_token: string;
-    user: {
-        id: string;
-        email: string;
-        name: string;
-    };
-}
-
-export interface RefreshTokenResponse {
-    access_token: string;
-    refresh_token: string;
-}
+import { AUTH_ENDPOINTS } from "@/constants/api/auth.endpoints";
+import { privateApi, publicApi } from "@/lib/axios-instance";
+import { LoginPayload, LoginResponse } from "@/types/login.type";
+import { RegisterPayload } from "@/types/register.type";
+import { RefreshTokenResponse } from "@/types/refreshToken.type";
 
 const AuthApi = {
     login: async (payload: LoginPayload): Promise<LoginResponse> => {
@@ -61,9 +39,11 @@ const AuthApi = {
         return response.data;
     },
 
-    /**
-     * Refresh token
-     */
+    getCurrentUser: async () => {
+        const response = await privateApi.get(AUTH_ENDPOINTS.ME);
+        return response.data;
+    },
+
     refreshToken: async (): Promise<RefreshTokenResponse> => {
         const refreshToken = CookieStorage.getItem('refresh_token');
 
@@ -99,6 +79,31 @@ const AuthApi = {
             }
         }
     },
+
+    forgotPassword: async (email: string): Promise<{ message: string }> => {
+        const response = await publicApi.post<{ message: string }>(
+            AUTH_ENDPOINTS.FORGOT_PASSWORD,
+            { email }
+        );
+
+        return response.data;
+    },
+
+    resetPassword: async (
+        token: string,
+        newPassword: string
+    ): Promise<{ message: string }> => {
+        const response = await publicApi.post<{ message: string }>(
+            AUTH_ENDPOINTS.RESET_PASSWORD,
+            {
+                token,
+                new_password: newPassword,
+            }
+        );
+
+        return response.data;
+    },
+
 };
 
 export default AuthApi;

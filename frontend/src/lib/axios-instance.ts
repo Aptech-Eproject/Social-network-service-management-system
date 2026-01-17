@@ -6,7 +6,7 @@ import axios, {
 
 import CookieStorage from './cookie-storage';
 import AuthApi from '@/api-requests/auth.requests';
-import { API_OPTIONS } from '@/constants/api.options';
+import { API_OPTIONS } from '@/constants/api/options';
 
 export const publicApi = axios.create(API_OPTIONS);
 

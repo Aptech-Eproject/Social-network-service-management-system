@@ -1,6 +1,6 @@
 "use client";
 
-import type { OrderItem } from "@/types/order";
+import type { OrderItem } from "@/types/order.type";
 
 import UserSubHeader from "@/layouts/client/client-panel/UserSubHeader";
 import OrderStatusCards from "@/components/client/client-panel/OrderStatusCards";
