@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebar } from "@/contexts/shared/SidebarContext";
+import { useSidebar } from "@/contexts/common/SidebarContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

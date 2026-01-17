@@ -1,11 +1,11 @@
 import { Search, CalendarIcon, Trash2 } from "lucide-react";
-import { Calendar } from "@/components/shared/ui/calendar";
+import { Calendar } from "@/components/common/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/shared/ui/popover";
-import { Button } from "@/components/shared/ui/button";
+} from "@/components/common/ui/popover";
+import { Button } from "@/components/common/ui/button";
 
 export default function OrderFilters() {
     return (

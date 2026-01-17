@@ -5,8 +5,8 @@ import { MoreVerticalIcon } from "lucide-react";
 import type { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 
-import Dropdown from "@/components/shared/ui/dropdown";
-import DropdownItem from "@/components/shared/ui/dropdown-item";
+import Dropdown from "@/components/common/ui/dropdown";
+import DropdownItem from "@/components/common/ui/dropdown-item";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false

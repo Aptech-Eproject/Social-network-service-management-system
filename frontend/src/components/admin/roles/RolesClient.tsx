@@ -5,8 +5,8 @@ import {
     Search,
 } from "lucide-react";
 
-import { Input } from "@/components/shared/ui/input";
-import { Label } from "@/components/shared/ui/label";
+import { Input } from "@/components/common/ui/input";
+import { Label } from "@/components/common/ui/label";
 import {
     Select,
     SelectContent,
@@ -15,7 +15,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 import RoleTable from "@/components/admin/roles/RoleTable";
 import { useRouter } from "next/navigation";
 

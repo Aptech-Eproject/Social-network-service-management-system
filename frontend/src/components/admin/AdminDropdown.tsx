@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import Dropdown from "@/components/shared/ui/dropdown";
-import DropdownItem from "@/components/shared/ui/dropdown-item";
+import Dropdown from "@/components/common/ui/dropdown";
+import DropdownItem from "@/components/common/ui/dropdown-item";
 import Image from "next/image";
 
 function AdminDropdown() {

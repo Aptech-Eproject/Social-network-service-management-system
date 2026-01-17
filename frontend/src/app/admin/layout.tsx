@@ -1,5 +1,5 @@
-import Backdrop from '../../layouts/shared/Backdrop';
-import ScrollToTopButton from '@/components/shared/ScrollToTopButton';
+import Backdrop from '../../layouts/common/Backdrop';
+import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 import AdminSidebar from '@/layouts/admin/AdminSidebar';
 import AdminHeader from '@/layouts/admin/AdminHeader';
 import AdminFooter from '@/layouts/admin/AdminFooter';

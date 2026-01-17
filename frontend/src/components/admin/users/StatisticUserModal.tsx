@@ -7,7 +7,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/shared/ui/table";
+} from "@/components/common/ui/table";
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 type UtmSource = {

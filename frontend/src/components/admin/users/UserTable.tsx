@@ -1,6 +1,6 @@
 "use client"
 
-import Badge from "@/components/shared/ui/badge";
+import Badge from "@/components/common/ui/badge";
 
 import {
     Table,
@@ -8,7 +8,7 @@ import {
     TableCell,
     TableHeader,
     TableRow,
-} from "../../shared/ui/product-table";
+} from "../../common/ui/product-table";
 import {
     SquarePen,
     Trash

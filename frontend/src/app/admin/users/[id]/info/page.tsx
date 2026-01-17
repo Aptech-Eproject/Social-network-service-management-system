@@ -1,6 +1,6 @@
 "use client"
 
-import { QuantityInput } from "@/components/shared/ui/input-number-action";
+import { QuantityInput } from "@/components/common/ui/input-number-action";
 import {
     Select,
     SelectContent,
@@ -9,7 +9,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 import { Save, User, Mail, Phone, Users } from "lucide-react";
 
 function InfoUser() {

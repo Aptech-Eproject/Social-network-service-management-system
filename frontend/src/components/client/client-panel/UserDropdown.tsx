@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import Dropdown from "@/components/shared/ui/dropdown";
-import DropdownItem from "@/components/shared/ui/dropdown-item";
+import Dropdown from "@/components/common/ui/dropdown";
+import DropdownItem from "@/components/common/ui/dropdown-item";
 import Link from "next/link";
 import Image from "next/image";
 

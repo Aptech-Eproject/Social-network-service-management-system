@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import RegisterForm from "@/layouts/client/landing-page/RegisterForm";
 import AuthFooterLinks from "@/components/client/landing-page/AuthFooterLinks";
-import BorderAnimatedContainer from "@/components/shared/BorderAnimatedContainer";
+import BorderAnimatedContainer from "@/components/common/BorderAnimatedContainer";
 
 export default function RegisterPage() {
     const router = useRouter();

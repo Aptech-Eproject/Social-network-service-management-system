@@ -50,7 +50,7 @@ git push origin feature/ten-tinh-nang
 - Push trực tiếp lên `main` hoặc `dev`
 - Merge mà chưa có approval
 - Merge khi CI đang fail
-- Force push lên shared branches(`dev`, `main`)
+- Force push lên common branches(`dev`, `main`)
 
 ### ✅ NÊN:
 - Tạo feature branch cho mỗi tính năng

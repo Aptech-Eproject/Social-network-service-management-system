@@ -6,9 +6,9 @@ import {
     Save
 } from "lucide-react";
 
-import { Label } from "@/components/shared/ui/label";
-import { Input } from "@/components/shared/ui/input";
-import { QuantityInput } from "@/components/shared/ui/input-number-action";
+import { Label } from "@/components/common/ui/label";
+import { Input } from "@/components/common/ui/input";
+import { QuantityInput } from "@/components/common/ui/input-number-action";
 import {
     Select,
     SelectContent,
@@ -17,8 +17,8 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
-import { InvoiceCreateTable } from "@/components/shared/ui/invoice-create-table";
+} from "@/components/common/ui/select";
+import { InvoiceCreateTable } from "@/components/common/ui/invoice-create-table";
 import AdminSubHeader from "@/layouts/admin/AdminSubHeader";
 
 function CreateInvoice() {

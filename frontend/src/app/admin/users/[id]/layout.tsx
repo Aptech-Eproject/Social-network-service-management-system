@@ -12,7 +12,7 @@ import {
 
 import { ActivityHistoryTable } from "@/components/admin/users/ActivityHistoryTable";
 import { BalanceFluctuations } from "@/components/admin/users/BalanceFluctuations";
-import ScrollToTop from "@/components/shared/ScrollToTop";
+import ScrollToTop from "@/components/common/ScrollToTop";
 import UserDetailActions from "@/components/admin/users/UserDetailActions";
 
 interface LayoutProps {

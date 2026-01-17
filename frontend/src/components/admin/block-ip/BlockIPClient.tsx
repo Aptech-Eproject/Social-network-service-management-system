@@ -8,9 +8,9 @@ import {
 
 import IPTable from "@/components/admin/block-ip/IPTable";
 
-import { Input } from "@/components/shared/ui/input";
-import { Label } from "@/components/shared/ui/label";
-import { DatePicker } from "@/components/shared/ui/date-picker";
+import { Input } from "@/components/common/ui/input";
+import { Label } from "@/components/common/ui/label";
+import { DatePicker } from "@/components/common/ui/date-picker";
 import {
     Select,
     SelectContent,
@@ -19,7 +19,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 import { useState } from "react";
 import AddIPFormModal from "./AddIPFormModal";
 

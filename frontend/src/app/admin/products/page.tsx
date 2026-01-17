@@ -6,8 +6,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import { Input } from "@/components/shared/ui/input";
-import Pagination from "@/components/shared/ui/pagination";
+import { Input } from "@/components/common/ui/input";
+import Pagination from "@/components/common/ui/pagination";
 
 import ProductTable from "@/components/admin/products/ProductTable";
 import AdminSubHeader from "@/layouts/admin/AdminSubHeader";

@@ -1,11 +1,11 @@
-import Badge from "@/components/shared/ui/badge";
+import Badge from "@/components/common/ui/badge";
 import {
     Table,
     TableBody,
     TableCell,
     TableHeader,
     TableRow,
-} from "../../shared/ui/product-table";
+} from "../../common/ui/product-table";
 import Image from "next/image";
 
 function ProductTable() {

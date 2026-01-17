@@ -5,7 +5,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/shared/ui/table";
+} from "@/components/common/ui/table";
 import { DollarSign } from "lucide-react";
 
 export type BalanceFluctuation = {

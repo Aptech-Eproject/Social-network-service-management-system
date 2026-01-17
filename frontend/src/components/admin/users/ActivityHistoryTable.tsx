@@ -7,7 +7,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/shared/ui/table";
+} from "@/components/common/ui/table";
 
 export type ActivityHistory = {
     id: string;

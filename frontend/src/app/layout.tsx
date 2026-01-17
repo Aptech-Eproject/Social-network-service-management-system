@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/global.css";
-import { SidebarProvider } from "@/contexts/shared/SidebarContext";
 import { inter } from "@/font";
+import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
+import Providers from "@/provider";
 
 export const runtime = 'edge';
 
@@ -31,9 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider>
+        <Providers>
           {children}
-        </SidebarProvider>
+        </Providers>
       </body>
     </html>
   );

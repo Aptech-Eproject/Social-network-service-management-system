@@ -1,8 +1,8 @@
 "use client"
 
-import { Input } from "@/components/shared/ui/input";
-import { Label } from "@/components/shared/ui/label";
-import Dropzone from "@/components/shared/ui/dropzone";
+import { Input } from "@/components/common/ui/input";
+import { Label } from "@/components/common/ui/label";
+import Dropzone from "@/components/common/ui/dropzone";
 import {
     Select,
     SelectContent,
@@ -11,13 +11,13 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 import {
     InputGroup,
     InputGroupAddon,
     InputGroupText,
     InputGroupTextarea,
-} from "@/components/shared/ui/input-group";
+} from "@/components/common/ui/input-group";
 
 import AdminSubHeader from "@/layouts/admin/AdminSubHeader";
 

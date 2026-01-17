@@ -16,7 +16,7 @@ import {
 
 import { ArrowUpDown, Trash2 } from "lucide-react"
 
-import { Button } from "@/components/shared/ui/button"
+import { Button } from "@/components/common/ui/button"
 
 import {
     Table,
@@ -25,7 +25,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/shared/ui/table"
+} from "@/components/common/ui/table"
 
 export type Product = {
     id: string

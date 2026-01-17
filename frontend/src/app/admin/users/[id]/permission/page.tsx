@@ -6,7 +6,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 import { Save } from "lucide-react";
 
 function PermissionUser() {

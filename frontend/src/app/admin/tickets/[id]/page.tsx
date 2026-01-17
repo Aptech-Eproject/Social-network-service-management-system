@@ -9,7 +9,7 @@ import {
     Clock2,
 } from 'lucide-react';
 
-import ScrollToTop from '@/components/shared/ScrollToTop';
+import ScrollToTop from '@/components/common/ScrollToTop';
 import AdminSubHeader from '@/layouts/admin/AdminSubHeader';
 import { confirmAction } from '@/lib/alert';
 import TicketDetailActions from '@/components/admin/tickets/TicketDetailActions';

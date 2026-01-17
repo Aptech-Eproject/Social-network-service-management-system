@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import {
     flexRender,
@@ -7,16 +9,17 @@ import {
     getSortedRowModel,
     useReactTable,
 
+    type Column,
     type ColumnDef,
     type ColumnFiltersState,
     type SortingState,
     type VisibilityState,
-    type Column,
 } from "@tanstack/react-table"
 
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
-import { Button } from "@/components/shared/ui/button"
+import { Button } from "@/components/common/ui/button"
+import { Checkbox } from "@/components/common/ui/checkbox"
 
 import {
     DropdownMenu,
@@ -25,7 +28,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/shared/ui/dropdown-menu"
+} from "@/components/common/ui/dropdown-menu"
 
 import {
     Table,
@@ -34,79 +37,141 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/shared/ui/table"
+} from "@/components/common/ui/table"
 
-export type Product = {
+export type Ticket = {
     id: string
-    name: string
-    quantity: number
-    unitCost: number
-    discount: number
-    total: number
+    title: string
+    orderCode: string
+    topic: string
+    status: "mới" | "đang xử lý" | "hoàn thành" | "đã hủy"
+    createdAt: string
+    updatedAt: string
 }
 
-const data: Product[] = [
+const data: Ticket[] = [
     {
         id: "1",
-        name: 'Macbook pro 13',
-        quantity: 1,
-        unitCost: 1200,
-        discount: 0,
-        total: 1200,
+        title: "Không đăng nhập được",
+        orderCode: "ORD-1001",
+        topic: "Tài khoản",
+        status: "mới",
+        createdAt: "2025-01-05",
+        updatedAt: "2025-01-05",
     },
     {
         id: "2",
-        name: "Apple Watch Ultra",
-        quantity: 1,
-        unitCost: 300,
-        discount: 0.5,
-        total: 150,
+        title: "Thanh toán bị lỗi",
+        orderCode: "ORD-1002",
+        topic: "Thanh toán",
+        status: "đang xử lý",
+        createdAt: "2025-01-04",
+        updatedAt: "2025-01-06",
     },
     {
         id: "3",
-        name: "iPhone 15 Pro Max",
-        quantity: 3,
-        unitCost: 800,
-        discount: 0,
-        total: 2400,
+        title: "Yêu cầu hoàn tiền",
+        orderCode: "ORD-1003",
+        topic: "Đơn hàng",
+        status: "hoàn thành",
+        createdAt: "2025-01-01",
+        updatedAt: "2025-01-03",
     },
     {
         id: "4",
-        name: "iPad Pro 3rd Gen",
-        quantity: 1,
-        unitCost: 900,
-        discount: 0,
-        total: 900,
+        title: "Sai thông tin sản phẩm",
+        orderCode: "ORD-1004",
+        topic: "Sản phẩm",
+        status: "đã hủy",
+        createdAt: "2024-12-30",
+        updatedAt: "2024-12-31",
+    },
+    {
+        id: "5",
+        title: "Cần hỗ trợ kỹ thuật",
+        orderCode: "ORD-1005",
+        topic: "Kỹ thuật",
+        status: "mới",
+        createdAt: "2025-01-07",
+        updatedAt: "2025-01-07",
+    },
+    {
+        id: "6",
+        title: "Đổi trả sản phẩm",
+        orderCode: "ORD-1006",
+        topic: "Đơn hàng",
+        status: "đang xử lý",
+        createdAt: "2025-01-06",
+        updatedAt: "2025-01-08",
     },
 ]
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Ticket>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Chọn tất cả"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Chọn dòng"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
     {
         accessorKey: "id",
         header: "ID",
     },
     {
-        accessorKey: "name",
-        header: "Sản phẩm",
+        accessorKey: "title",
+        header: "Title",
     },
     {
-        accessorKey: "quantity",
-        header: "Số lượng",
+        accessorKey: "orderCode",
+        header: "Mã đơn hàng",
     },
     {
-        accessorKey: "unitCost",
-        header: "Giá thành",
-        cell: ({ row }) => `$${row.getValue("unitCost")}`,
+        accessorKey: "topic",
+        header: "Chủ đề",
     },
     {
-        accessorKey: "discount",
-        header: "Khuyến mãi",
-        cell: ({ row }) => `${row.getValue("discount") as number * 100}%`,
+        accessorKey: "status",
+        header: ({ column }) => (
+            <Button
+                className="font-bold text-[13px]!"
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === "asc")
+                }
+            >
+                Trạng thái
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <span className="capitalize">{row.getValue("status")}</span>
+        ),
     },
     {
-        accessorKey: "total",
-        header: "Tổng cộng",
-        cell: ({ row }) => `$${row.getValue("total")}`,
+        accessorKey: "createdAt",
+        header: "Ngày tạo",
+    },
+    {
+        accessorKey: "updatedAt",
+        header: "Cập nhật",
     },
     {
         id: "actions",
@@ -149,7 +214,7 @@ function SortableHeader({
     column,
     title,
 }: {
-    column: Column<Product>,
+    column: Column<Ticket, unknown>,
     title: string
 }) {
     return (
@@ -166,13 +231,14 @@ function SortableHeader({
     )
 }
 
-export function InvoiceDetailTable() {
+export function SupportRequestTable() {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
+    const [visibleRows, setVisibleRows] = React.useState(0)
 
     const table = useReactTable({
         data,
@@ -194,9 +260,26 @@ export function InvoiceDetailTable() {
         getFilteredRowModel: getFilteredRowModel(),
     })
 
+    // Animation effect for loading rows
+    React.useEffect(() => {
+        const totalRows = table.getRowModel().rows.length
+        let count = 0
+
+        const interval = setInterval(() => {
+            count++
+            setVisibleRows(count)
+
+            if (count >= totalRows) {
+                clearInterval(interval)
+            }
+        }, 80) // 80ms delay between each row
+
+        return () => clearInterval(interval)
+    }, [table.getRowModel().rows.length])
+
     return (
         <div className="w-full text-sm!">
-            <div className="border rounded-md !text-sm">
+            <div className="border rounded-md !text-sm overflow-hidden">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -217,10 +300,17 @@ export function InvoiceDetailTable() {
 
                     <TableBody>
                         {table.getRowModel().rows.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row, index) => (
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
+                                    className={`transition-all duration-500 ease-out ${index < visibleRows
+                                        ? "opacity-100 translate-y-0"
+                                        : "opacity-0 translate-y-4"
+                                        }`}
+                                    style={{
+                                        transitionDelay: `${index * 50}ms`
+                                    }}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
@@ -244,6 +334,32 @@ export function InvoiceDetailTable() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-end space-x-2 py-4 px-4">
+                <div className="flex-1 text-sm text-muted-foreground">
+                    {table.getFilteredSelectedRowModel().rows.length} /{" "}
+                    {table.getFilteredRowModel().rows.length} dòng được chọn
+                </div>
+
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    Trước
+                </Button>
+
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                >
+                    Sau
+                </Button>
             </div>
         </div>
     )

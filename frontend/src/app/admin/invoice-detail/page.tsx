@@ -2,7 +2,7 @@
 
 import { Printer } from "lucide-react";
 
-import { InvoiceDetailTable } from "@/components/shared/ui/invoice-detail-table";
+import { InvoiceDetailTable } from "@/components/common/ui/invoice-detail-table";
 import AdminSubHeader from "@/layouts/admin/AdminSubHeader";
 
 function InvoiceDetail() {
@@ -58,7 +58,7 @@ function InvoiceDetail() {
                         </div>
 
                         {/* Space Box 1 */}
-                        <div className="w-full"/>
+                        <div className="w-full" />
 
                         {/* Divide Vertical */}
                         <div className="border-r border-gray-200 self-stretch" />
@@ -128,13 +128,13 @@ function InvoiceDetail() {
 
                             {/* Total */}
                             <div className="flex items-center w-full">
-                            <span className="text-black text-sm font-medium">
-                                Tổng tiền:
-                            </span>
-                            <div className="flex-1" />
-                            <span className="text-black text-sm font-medium">
-                                $3,410
-                            </span>
+                                <span className="text-black text-sm font-medium">
+                                    Tổng tiền:
+                                </span>
+                                <div className="flex-1" />
+                                <span className="text-black text-sm font-medium">
+                                    $3,410
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -143,21 +143,21 @@ function InvoiceDetail() {
                     <div className="w-full px-6 flex items-center justify-end gap-3">
                         {/* Payment Button */}
                         <button
-                                className="flex items-center gap-2 cursor-pointer px-4 py-3 border border-gray-300 rounded-sm hover:bg-slate-100 transition-colors duration-300"
-                            >
-                                <span className="text-sm font-medium">
-                                    Tiến hành thanh toán
-                                </span>
+                            className="flex items-center gap-2 cursor-pointer px-4 py-3 border border-gray-300 rounded-sm hover:bg-slate-100 transition-colors duration-300"
+                        >
+                            <span className="text-sm font-medium">
+                                Tiến hành thanh toán
+                            </span>
                         </button>
 
                         {/* Print Button */}
                         <button
-                                className="bg-[#5f73ff] flex items-center gap-2 cursor-pointer px-4 py-3 rounded-sm hover:opacity-80 transition-all duration-300"
-                            >
-                                <Printer className="w-4 h-4 text-slate-200" />
-                                <span className="text-sm font-medium text-slate-200">
-                                    In hóa đơn
-                                </span>
+                            className="bg-[#5f73ff] flex items-center gap-2 cursor-pointer px-4 py-3 rounded-sm hover:opacity-80 transition-all duration-300"
+                        >
+                            <Printer className="w-4 h-4 text-slate-200" />
+                            <span className="text-sm font-medium text-slate-200">
+                                In hóa đơn
+                            </span>
                         </button>
                     </div>
                 </div>

@@ -11,19 +11,19 @@ import {
     Trash2
 } from "lucide-react";
 
-import { Input } from "@/components/shared/ui/input";
-import { DatePicker } from "@/components/shared/ui/date-picker";
-import { SupportRequestTable } from "@/components/shared/ui/support-request-table";
+import { Input } from "@/components/common/ui/input";
+import { DatePicker } from "@/components/common/ui/date-picker";
+import { SupportRequestTable } from "@/components/common/ui/support-request-table";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 
 import UserSubHeader from "@/layouts/client/client-panel/UserSubHeader";
-import ClientOnly from "@/components/shared/ClientOnly";
+import ClientOnly from "@/components/common/ClientOnly";
 
 function SupportRequestPage() {
     const titlePage = "yêu cầu hỗ trợ";

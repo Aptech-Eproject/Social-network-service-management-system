@@ -11,9 +11,9 @@ import {
 import UserTable from "@/components/admin/users/UserTable";
 import AddUserFormModal from "./AddUserFormModal"
 
-import Pagination from "@/components/shared/ui/pagination";
-import { Input } from "@/components/shared/ui/input";
-import { Label } from "@/components/shared/ui/label";
+import Pagination from "@/components/common/ui/pagination";
+import { Input } from "@/components/common/ui/input";
+import { Label } from "@/components/common/ui/label";
 import {
     Select,
     SelectContent,
@@ -22,7 +22,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
+} from "@/components/common/ui/select";
 
 function UsersClient() {
     const [isShowAddUserFormModal, setIsShowAddUserFormModal] = useState(false);

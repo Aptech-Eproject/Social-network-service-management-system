@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-import { Button } from "@/components/shared/ui/button";
+import { Button } from "@/components/common/ui/button";
 import {
     Card,
     CardContent,
@@ -14,14 +14,14 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/shared/ui/card";
+} from "@/components/common/ui/card";
 import {
     Field,
     FieldError,
     FieldGroup,
     FieldLabel,
-} from "@/components/shared/ui/field";
-import { Input } from "@/components/shared/ui/input";
+} from "@/components/common/ui/field";
+import { Input } from "@/components/common/ui/input";
 import { registerSchema } from "@/schemas/auth/register.schema";
 
 export default function RegisterForm() {

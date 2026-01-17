@@ -7,8 +7,8 @@ import AdminSubHeader from "@/layouts/admin/AdminSubHeader";
 import StatisticsCards from "@/components/admin/recharge-bank/StatisticsCards";
 import DepositChart from "@/components/admin/recharge-bank/DepositChart";
 
-import { Input } from "@/components/shared/ui/input";
-import { Label } from "@/components/shared/ui/label";
+import { Input } from "@/components/common/ui/input";
+import { Label } from "@/components/common/ui/label";
 import {
     Select,
     SelectContent,
@@ -17,8 +17,8 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/shared/ui/select";
-import { DatePicker } from "@/components/shared/ui/date-picker";
+} from "@/components/common/ui/select";
+import { DatePicker } from "@/components/common/ui/date-picker";
 import RechartBankTable from "@/components/admin/recharge-bank/RechartBankTable";
 import Summary from "@/components/admin/recharge-bank/Summary";
 

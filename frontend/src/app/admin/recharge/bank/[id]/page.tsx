@@ -11,7 +11,7 @@ import {
     Lightbulb
 } from 'lucide-react';
 
-import ScrollToTop from '@/components/shared/ScrollToTop';
+import ScrollToTop from '@/components/common/ScrollToTop';
 import AdminSubHeader from '@/layouts/admin/AdminSubHeader';
 
 interface LayoutProps {

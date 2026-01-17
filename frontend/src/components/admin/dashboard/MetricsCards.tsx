@@ -5,7 +5,7 @@ import {
     Users
 } from "lucide-react"
 
-import Badge from "@/components/shared/ui/badge"
+import Badge from "@/components/common/ui/badge"
 
 function MetricsCards() {
     return (

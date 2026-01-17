@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import Pagination from '@/components/shared/ui/pagination';
+import Pagination from '@/components/common/ui/pagination';
 import ChildrentServiceTable from '@/components/admin/services/ChildrentServiceTable';
 
 import {
