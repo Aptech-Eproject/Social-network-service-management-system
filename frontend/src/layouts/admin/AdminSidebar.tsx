@@ -12,11 +12,8 @@ import {
     Package,
     Headset,
     Dot,
-    History,
-    Calendar,
     PlusCircle,
     Ban,
-    MessageSquareText,
     ShieldCheck
 } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -40,32 +37,6 @@ const adminMenuItems: NavItemType[] = [
         icon: <LayoutDashboard size={18} />,
         path: "/admin/dashboard",
     },
-    // {
-    //     name: "Lịch sử",
-    //     icon: <History size={18} />,
-    //     subItems: [
-    //         {
-    //             name: "Nhật ký hoạt động",
-    //             path: "/admin/history/activities",
-    //             icon: <Dot size={18} />
-    //         },
-    //         {
-    //             name: "Biến động số dư",
-    //             path: "/admin/history/balance-fluctuations",
-    //             icon: <Dot size={18} />
-    //         },
-    //         {
-    //             name: "Nhật ký Bot Telegram",
-    //             path: "/admin/history/bot-telegram",
-    //             icon: <Dot size={18} />
-    //         },
-    //     ],
-    // },
-    // {
-    //     name: "Tự động hoá",
-    //     icon: <Calendar size={18} />,
-    //     path: "/admin/automating"
-    // },
     {
         name: "Addons",
         icon: <PlusCircle size={18} />,
@@ -76,11 +47,6 @@ const adminMenuItems: NavItemType[] = [
         icon: <Ban size={18} />,
         path: "/admin/block-ip"
     },
-    // {
-    //     name: "AI Chat",
-    //     icon: <MessageSquareText size={18} />,
-    //     path: "/admin/automating"
-    // },
 ];
 
 const adminServiceItems: NavItemType[] = [
@@ -413,7 +379,7 @@ function AdminSidebar() {
     }
 
     return (
-        <aside className="sticky mt-1 lg:mt-0 flex flex-col top-0 px-5 left-0 w-74! bg-[#0f172a] text-gray-900 border-r border-gray-200 h-screen transition-all duration-300 ease-in-out z-50">
+        <aside className="sticky mt-1 lg:mt-0 flex flex-col top-0 px-5 left-0 w-72! bg-[#0f172a] text-gray-900 border-r border-gray-200 h-screen transition-all duration-300 ease-in-out z-50">
             {/* Logo */}
             <Link href={"/"} className="h-18 py-4.5 px-6 mb-4">
                 <Image

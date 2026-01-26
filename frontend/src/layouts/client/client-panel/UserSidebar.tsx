@@ -165,10 +165,10 @@ function UserSidebar() {
         [pathname]
     );
 
-    const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({}); // to get real height
+    const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
     const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
         {}
-    ); // to get current height
+    );
 
     const handleSubmenuToggle = (
         index: number,
@@ -186,7 +186,6 @@ function UserSidebar() {
         });
     };
 
-    // check if current path matches any submenu item
     useEffect(() => {
         let subMenuMatched = false;
 
@@ -216,7 +215,6 @@ function UserSidebar() {
         });
     }, [pathname, isActive]);
 
-    // Set the height of the submenu items when the submenu is opened
     useEffect(() => {
         if (openSubmenu !== null) {
             const key = `${openSubmenu.type}-${openSubmenu.index}`;
