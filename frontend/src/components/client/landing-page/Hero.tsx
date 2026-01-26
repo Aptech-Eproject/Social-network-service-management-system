@@ -1,8 +1,35 @@
-import Link from "next/link";
+"use client"
 
 export default function Hero() {
+  const socialMediaLogos = [
+    {
+      name: "Facebook",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg"
+    },
+    {
+      name: "Instagram",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/960px-Instagram_logo.svg.png"
+    },
+    {
+      name: "YouTube",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+    },
+    {
+      name: "Twitter",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Twitter_logo.svg/1280px-Twitter_logo.svg.png"
+    },
+    {
+      name: "TikTok",
+      logo: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg"
+    },
+    {
+      name: "Google",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+    },
+  ];
+
   return (
-    <section className="pt-40 min-h-screen">
+    <section className="pt-40 min-h-screen relative">
       <div className="flex flex-col text-center items-center max-w-7xl mx-auto px-6 gap-12">
         <div className="md:w-175 w-full">
           <div>
@@ -19,16 +46,27 @@ export default function Hero() {
               Tạo hiệu ứng đám đông, giúp bạn chốt đơn và xây dựng uy tín dễ dàng hơn.
             </p>
 
-            <Link
-              href="/login"
-              className="inline-block bg-[#2563eb]! hover:opacity-80 text-white font-bold px-10 py-3 rounded-sm duration-600 transition-opacity"
-            >
-              Trải nghiệm ngay
-            </Link>
+            {/* Social Media Logos */}
+            <div className="relative w-full! py-8 bg-linear-to-b from-transparent via-blue-50/30 to-transparent">
+              <div className="flex gap-22 px-6 items-center justify-center">
+                {socialMediaLogos.map((social, idx) => (
+                  <div
+                    key={idx}
+                    className="shrink-0 h-16 flex items-center justify-center transition-transform hover:scale-110 duration-300"
+                    title={social.name}
+                  >
+                    <img
+                      src={social.logo}
+                      alt={social.name}
+                      className="min-h-0.5 w-32 object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
 
       {/* Wave Container */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
