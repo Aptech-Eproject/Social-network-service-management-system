@@ -2,7 +2,7 @@
 
 import AuthFooterLinks from "@/components/client/landing-page/AuthFooterLinks";
 import BorderAnimatedContainer from "@/components/common/BorderAnimatedContainer";
-import { useLogin } from "@/hooks/common/useAuth";
+import { useLogin } from "@/hooks/api/useAuth";
 import LoginForm from "@/layouts/client/landing-page/LoginForm";
 import { LoginPayload } from "@/types/login.type";
 import { AxiosError } from "axios";

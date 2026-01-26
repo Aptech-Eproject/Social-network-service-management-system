@@ -1,7 +1,7 @@
 import CookieStorage from "@/lib/cookie-storage";
 
-import { AUTH_ENDPOINTS } from "@/constants/api/auth.endpoints";
-import { privateApi, publicApi } from "@/lib/axios-instance";
+import { AUTH_ENDPOINTS } from "@/constants/api/auth.endpoints.constant";
+import { privateApi, publicApi } from "@/lib/api/axios-instance";
 import { LoginPayload, LoginResponse } from "@/types/login.type";
 import { RegisterPayload } from "@/types/register.type";
 import { RefreshTokenResponse } from "@/types/refreshToken.type";

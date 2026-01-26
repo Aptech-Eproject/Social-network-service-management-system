@@ -4,11 +4,9 @@ import axios, {
     type InternalAxiosRequestConfig
 } from 'axios';
 
-import CookieStorage from './cookie-storage';
-import AuthApi from '@/api-requests/auth.requests';
-import { API_OPTIONS } from '@/constants/api/options';
-
-export const publicApi = axios.create(API_OPTIONS);
+import CookieStorage from '../cookie-storage';
+import AuthApi from '@/api/auth.api';
+import { API_OPTIONS } from '@/constants/api/options.constant';
 
 export const privateApi = axios.create({
     ...API_OPTIONS,

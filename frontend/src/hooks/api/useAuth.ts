@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import AuthApi from '@/api-requests/auth.requests';
-import { QUERY_KEYS } from '@/constants/query-keys';
+import AuthApi from '@/api/auth.api';
+import { QUERY_KEYS } from '@/constants/query/query-keys';
 import { useRouter } from 'next/navigation';
 import CookieStorage from '@/lib/cookie-storage';
 import { LoginPayload } from '@/types/login.type';
