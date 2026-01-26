@@ -1,10 +1,11 @@
 import { CheckSquare } from "lucide-react";
 import Image from "next/image";
+import Services from "./Services";
 
 export default function Benefits() {
   return (
-    <section className="bg-white relative w-full pb-80">
-      <div className="bg-[#2563eb] px-6 relative z-10 mx-auto flex flex-col gap-12 items-center">
+    <section className="bg-white relative w-full pb-70">
+      <div className="bg-[#1e40af] px-6 relative z-10 mx-auto flex flex-col gap-12 items-center">
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-4xl! max-w-4xl! text-center font-extrabold text-white mb-6 leading-tight">
             Chúng tôi đang giúp thống trị mạng xã hội với bảng điều khiển mạng
@@ -12,7 +13,7 @@ export default function Benefits() {
           </h2>
         </div>
 
-        <div className="flex gap-12 items-center justify-between">
+        <div className="flex gap-12 items-start justify-between">
           {/* Left: Image */}
           <div className="relative w-full">
             <div className="rounded-3xl h-100 flex items-center justify-center">
@@ -29,8 +30,8 @@ export default function Benefits() {
           </div>
 
           {/* Right: Content */}
-          <div className="max-w-2xl">
-            <p className="text-gray-300 text-[16px] font-normal mb-8 leading-relaxed">
+          <div className="max-w-2xl flex flex-col w-full">
+            <p className="text-gray-300 text-[16px] font-normal mb-8 leading-relaxed pt-8">
               Chúng tôi chỉ hoạt động hỗ trợ 24 giờ mỗi ngày và bảy lần một tuần
               với tất cả các nhu cầu và dịch vụ của bạn suốt cả ngày. Đừng đi đâu
               khác. Chúng tôi sẵn sàng phục vụ bạn và giúp đỡ bạn với tất cả các
@@ -66,6 +67,8 @@ export default function Benefits() {
             </div>
           </div>
         </div>
+
+        {/* <Services /> */}
       </div>
 
       {/* Wave Container - Bottom with downward waves */}
@@ -78,7 +81,7 @@ export default function Benefits() {
         >
           {/* Wave thứ nhất */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="0.5"
             d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
@@ -95,7 +98,7 @@ export default function Benefits() {
 
           {/* Wave thứ hai */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="0.7"
             d="M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,170.7C672,160,768,128,864,128C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
@@ -112,7 +115,7 @@ export default function Benefits() {
 
           {/* Wave thứ ba */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="1"
             d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,170.7C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
