@@ -14,7 +14,7 @@ function ServicesPricingCardModern() {
     const [isAnnually, setIsAnnually] = useState(false);
 
     return (
-        <div className="pb-36 bg-white px-6 w-full pt-30 rounded-lg">
+        <div className="pb-50 bg-white px-6 w-full pt-30 rounded-lg">
             <div className="flex flex-col px-18">
                 <div className="border-t- border-gray-800 w-20 mx-auto mb-4" />
 
