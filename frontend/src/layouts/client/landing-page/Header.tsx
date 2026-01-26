@@ -26,13 +26,13 @@ export default function Header() {
       className={`fixed top-0 left-0 w-full bg-white/95 backdrop-blur z-50 transition-shadow duration-300 ${isScrolled ? "shadow-lg" : ""
         }`}
     >
-      <div className="w-full bg-[#2563eb] h-8.5 text-white flex items-center justify-center gap-2">
+      <div className="w-full bg-[#1e40af] h-8.5 text-white flex items-center justify-center gap-2">
         <span className="text-[13px] font-medium">
           Use Open Graph to boost your social media CTR
         </span>
         <Link
           href={"https://likesub.io.vn/"}
-          className="font-bold text-[15px] border-b cursor-pointer"
+          className="font-bold text-[14px] border-b cursor-pointer"
         >
           Learn More
         </Link>
@@ -44,9 +44,8 @@ export default function Header() {
           <Image
             src="/images/logo.png"
             alt="LIKESUB-VIP"
-            className="h-9 w-auto"
-            width={200}
-            height={50}
+            width={150}
+            height={100}
           />
         </div>
         {/* Menu + Actions */}
@@ -83,7 +82,7 @@ export default function Header() {
           </nav>
           <Link
             href="/home"
-            className="bg-[#2563eb]! hover:opacity-80 px-4 py-2 rounded-sm font-semibold shadow transition-all duration-300 text-xs text-white"
+            className="bg-[#2563eb]! hover:opacity-80 px-4 py-2.5 rounded-sm font-semibold shadow transition-all duration-300 text-xs text-white"
           >
             SỬ DỤNG NGAY
           </Link>

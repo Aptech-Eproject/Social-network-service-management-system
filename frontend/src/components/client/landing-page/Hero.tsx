@@ -2,34 +2,33 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="mt-16 pt-20 pb-16 bg-white min-h-screen">
+    <section className="pt-40 min-h-screen">
       <div className="flex flex-col text-center items-center max-w-7xl mx-auto px-6 gap-12">
-        {/* Center Content */}
         <div className="md:w-175 w-full">
           <div>
-            <span className="font-bold text-[#2563eb] text-base mb-2 block">
-              Social Media Script
-            </span>
             <h1 className="text-5xl! font-extrabold text-gray-700 mb-6 leading-tight">
               <span className="block">
-                Bảng điều khiển truyền thông xã hội tốt nhất trên thế giới!
+                Bùng Nổ <span className="text-[#2563eb]">Tương Tác</span><br />
+                <span className="text-[#2563eb]">Nâng Tầm </span>
+                Thương Hiệu
               </span>
             </h1>
-            <p className="text-sm w-160 text-gray-500 font-semibold mb-8 leading-relaxed">
-              Quản lý tất cả các mạng truyền thông xã hội từ một bảng điều khiển
-              duy nhất, chất lượng và giá rẻ. Chúng tôi cung cấp dịch vụ trên
-              các mạng xã hội phổ biến nhất hiện nay. Chúng tôi có Instagram,
-              Twitter, Facebook, Youtube, TikTok, Spotify và nhiều dịch vụ khác.
+
+            <p className="text-[16px] w-full md:w-160 text-gray-500 font-medium mb-8 leading-relaxed mx-auto">
+              Hệ thống Seeding tự động: Tăng Like, Follow, View thần tốc.
+              Tạo hiệu ứng đám đông, giúp bạn chốt đơn và xây dựng uy tín dễ dàng hơn.
             </p>
+
             <Link
               href="/login"
               className="inline-block bg-[#2563eb]! hover:opacity-80 text-white font-bold px-10 py-3 rounded-sm duration-600 transition-opacity"
             >
-              Bắt đầu ngay
+              Trải nghiệm ngay
             </Link>
           </div>
         </div>
       </div>
+
 
       {/* Wave Container */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
@@ -41,7 +40,7 @@ export default function Hero() {
         >
           {/* Wave thứ nhất */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="0.5"
             d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
@@ -58,7 +57,7 @@ export default function Hero() {
 
           {/* Wave thứ hai */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="0.7"
             d="M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,170.7C672,160,768,128,864,128C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
@@ -75,7 +74,7 @@ export default function Hero() {
 
           {/* Wave thứ ba */}
           <path
-            fill="#2563eb"
+            fill="#1e40af"
             fillOpacity="1"
             d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,170.7C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >

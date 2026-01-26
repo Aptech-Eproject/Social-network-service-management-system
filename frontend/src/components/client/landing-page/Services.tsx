@@ -24,7 +24,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="mt-16 pt-20 pb-16 py-26 px-52 bg-gray-700">
+    <section className="pt-6 px-52 bg-[#1e40af]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {services.map((service, index) => (
@@ -33,10 +33,10 @@ export default function Services() {
               className="flex flex-col items-center gap-2 text-center"
             >
               <div className="w-16 h-16 rounded-lg flex items-center justify-center">
-                <service.icon className="text-green-400" size={50} />
+                <service.icon className="text-orange-600" size={60} />
               </div>
               <div>
-                <h3 className="text-white font-semibold text-base mb-1">
+                <h3 className="text-gray-300 font-normal text-sm mb-1">
                   {service.label}
                 </h3>
               </div>

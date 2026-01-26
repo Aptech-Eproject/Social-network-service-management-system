@@ -36,34 +36,41 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-28 px-2 bg-blue-50">
+    <section className="pb-28 px-2">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-medium text-center text-gray-700 mb-4">
-          Các câu hỏi thường gặp
-        </h2>
-        <p className="text-center text-gray-600 mb-8 max-w-xl mx-auto text-sm">
-          Chúng tôi đã trả lời một số câu hỏi thường gặp nhất trong hội thảo của
-          mình.
-        </p>
-
         <div className="grid md:grid-cols-2 py-6 items-center justify-between gap-8">
-          {/* Left: FAQ List */}
-          <div className="space-y-3">
+          {/* Left: Illustration */}
+          <div className="flex flex-col h-full gap-2.5 max-w-xl">
+            <p className="text-4xl font-extrabold">
+              Những câu hỏi thường gặp
+            </p>
+            <div className="space-y-0.5">
+              <p>
+                Không tìm thấy câu trả lời bạn đang tìm kiếm?
+              </p>
+              <p>
+                Hãy xem trang Câu hỏi thường gặp của chúng tôi để biết thêm thông tin.
+              </p>
+            </div>
+          </div>
+
+          {/* Right: FAQ List */}
+          <div className="space-y-4">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className={`bg-white border border-gray-200 rounded-lg p-3 hover:border-cyan-400 transition-900 cursor-pointer group shadow-sm ${openIndex === index ? "border-cyan-400" : ""}`}
+                className={`bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-600 transition-900 cursor-pointer group shadow-sm ${openIndex === index ? "border-blue-400" : ""}`}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
                 <div className="flex items-center justify-between">
                   <span
-                    className={`font-medium text-gray-800 group-hover:text-cyan-500 text-base ${openIndex === index ? "text-cyan-500" : ""}`}
+                    className={`font-medium text-gray-800 group-hover:text-[#2563eb] text-base ${openIndex === index ? "text-blue-500" : ""}`}
                   >
                     {feature.title}
                   </span>
                   <ChevronRight
                     size={18}
-                    className={`text-gray-400 group-hover:text-cyan-400 transition shrink-0 ${openIndex === index ? "rotate-90 text-cyan-400" : ""}`}
+                    className={`text-gray-400 group-hover:text-[#2563eb] transition shrink-0 ${openIndex === index ? "rotate-90 text-blue-400" : ""}`}
                   />
                 </div>
                 {openIndex === index && (
@@ -73,17 +80,6 @@ export default function Faq() {
                 )}
               </div>
             ))}
-          </div>
-
-          {/* Right: Illustration */}
-          <div className="flex items-center justify-end h-full">
-            <Image
-              src="/images/faq.png"
-              alt="FAQ illustration"
-              className="w-full max-w-full h-auto object-contain"
-              width={200}
-              height={200}
-            />
           </div>
         </div>
       </div>
