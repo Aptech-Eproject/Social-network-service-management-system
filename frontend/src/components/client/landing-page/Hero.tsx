@@ -1,22 +1,21 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="mt-16 pt-20 pb-16 bg-white">
-      <div className="flex flex-col md:flex-row items-center max-w-7xl mx-auto px-6 gap-12">
-        {/* Left: Content */}
-        <div className="md:w-1/2 w-full">
+    <section className="mt-16 pt-20 pb-16 bg-white min-h-screen">
+      <div className="flex flex-col text-center items-center max-w-7xl mx-auto px-6 gap-12">
+        {/* Center Content */}
+        <div className="md:w-175 w-full">
           <div>
-            <span className="text-gray-600 font-medium text-base mb-2 block">
+            <span className="font-bold text-[#2563eb] text-base mb-2 block">
               Social Media Script
             </span>
-            <h1 className="text-5xl font-semibold text-gray-700 mb-6 leading-tight">
-              <span className="block">Bảng điều khiển truyền</span>
-              <span className="block">thông xã hội tốt nhất</span>
-              <span className="block">trên thế giới!</span>
+            <h1 className="text-5xl! font-extrabold text-gray-700 mb-6 leading-tight">
+              <span className="block">
+                Bảng điều khiển truyền thông xã hội tốt nhất trên thế giới!
+              </span>
             </h1>
-            <p className="text-xs text-gray-500 font-semibold mb-8 leading-relaxed">
+            <p className="text-sm w-160 text-gray-500 font-semibold mb-8 leading-relaxed">
               Quản lý tất cả các mạng truyền thông xã hội từ một bảng điều khiển
               duy nhất, chất lượng và giá rẻ. Chúng tôi cung cấp dịch vụ trên
               các mạng xã hội phổ biến nhất hiện nay. Chúng tôi có Instagram,
@@ -24,22 +23,73 @@ export default function Hero() {
             </p>
             <Link
               href="/login"
-              className="inline-block bg-linear-to-r from-cyan-400 to-green-300 text-white font-bold px-10 py-2 rounded shadow transition-colors duration-600 hover:from-black hover:to-black"
+              className="inline-block bg-[#2563eb]! hover:opacity-80 text-white font-bold px-10 py-3 rounded-sm duration-600 transition-opacity"
             >
               Bắt đầu ngay
             </Link>
           </div>
         </div>
-        {/* Right: Image */}
-        <div className="md:w-1/2 w-full flex justify-center">
-          <Image
-            src="/images/who-we-are.png"
-            alt="image"
-            className="w-full max-w-xl h-auto object-contain drop-shadow-xl animate-float"
-            height={300}
-            width={300}
-          />
-        </div>
+      </div>
+
+      {/* Wave Container */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+        <svg
+          className="relative block w-full h-64 md:h-80"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
+        >
+          {/* Wave thứ nhất */}
+          <path
+            fill="#2563eb"
+            fillOpacity="0.5"
+            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          >
+            <animate
+              attributeName="d"
+              dur="10s"
+              repeatCount="indefinite"
+              values="
+                M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,128L48,138.7C96,149,192,171,288,165.3C384,160,480,128,576,128C672,128,768,160,864,165.3C960,171,1056,149,1152,133.3C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            />
+          </path>
+
+          {/* Wave thứ hai */}
+          <path
+            fill="#2563eb"
+            fillOpacity="0.7"
+            d="M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,170.7C672,160,768,128,864,128C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          >
+            <animate
+              attributeName="d"
+              dur="8s"
+              repeatCount="indefinite"
+              values="
+                M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,170.7C672,160,768,128,864,128C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,181.3C960,192,1056,192,1152,181.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,170.7C672,160,768,128,864,128C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            />
+          </path>
+
+          {/* Wave thứ ba */}
+          <path
+            fill="#2563eb"
+            fillOpacity="1"
+            d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,170.7C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          >
+            <animate
+              attributeName="d"
+              dur="6s"
+              repeatCount="indefinite"
+              values="
+                M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,170.7C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,256L48,240C96,224,192,192,288,186.7C384,181,480,203,576,208C672,213,768,203,864,202.7C960,203,1056,213,1152,213.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,170.7C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            />
+          </path>
+        </svg>
       </div>
     </section>
   );
