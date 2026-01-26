@@ -8,7 +8,14 @@ import Services from "@/components/client/landing-page/Services";
 import Footer from "@/layouts/client/landing-page/Footer";
 import Header from "@/layouts/client/landing-page/Header";
 
-export default function Home() {
+async function delayHomePage() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return { title: "Addons" };
+}
+
+export default async function Home() {
+  const data = await delayHomePage();
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
