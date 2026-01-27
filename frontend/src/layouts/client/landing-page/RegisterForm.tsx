@@ -1,12 +1,8 @@
 "use client";
 
-import type React from "react";
 import * as z from "zod";
-import { toast } from "sonner";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-import { Button } from "@/components/common/ui/button";
 import {
     Card,
     CardContent,
@@ -17,192 +13,117 @@ import {
 } from "@/components/common/ui/card";
 import {
     Field,
-    FieldError,
     FieldGroup,
-    FieldLabel,
 } from "@/components/common/ui/field";
-import { Input } from "@/components/common/ui/input";
-import { registerSchema } from "@/schemas/auth/register.schema";
 
-export default function RegisterForm() {
-    const form = useForm<z.infer<typeof registerSchema>>({
-        resolver: zodResolver(registerSchema),
+import { Input } from "@/components/common/ui/input";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerStep1Schema } from "@/schemas/auth/register-step-1.schema";
+
+export default function RegistersForm() {
+    const router = useRouter();
+    const [registerBy, setRegisterBy] = useState<"email" | "phone">("email");
+
+    const form = useForm<z.infer<typeof registerStep1Schema>>({
+        resolver: zodResolver(registerStep1Schema),
         defaultValues: {
-            username: "",
-            email: "",
-            password: "",
-            repassword: "",
+            identifier: "",
         },
     });
 
-    function onSubmit(data: z.infer<typeof registerSchema>) {
-        toast("You submitted the following values:", {
-            description: (
-                <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-                    <code>{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-            position: "bottom-right",
-            classNames: {
-                content: "flex flex-col gap-2",
-            },
-            style: {
-                "--border-radius": "calc(var(--radius)  + 4px)",
-            } as React.CSSProperties,
-        });
-    }
+    const onSubmit = (data: z.infer<typeof registerStep1Schema>) => {
+        window.alert(`REGISTER STEP 1: ${JSON.stringify(data)}`);
+        router.push("/verify-account");
+    };
+
     return (
-        <Card className="w-full sm:max-w-md shadow-xl border border-slate-700/40 bg-black-100 rounded-2xl p-2">
-            <CardHeader className="mt-4">
-                <CardTitle className="text-2xl font-bold text-blue-400 text-center">
-                    Đăng ký tài khoản
+        <Card className="w-full p-0!">
+            {/* Form Header */}
+            <CardHeader>
+                <CardTitle className="text-[26px] font-semibold text-black">
+                    Đăng nhập hoặc đăng ký
                 </CardTitle>
-                <CardDescription className="text-slate-400 text-center">
-                    Vui lòng nhập thông tin để tạo tài khoản mới
+                <CardDescription className="text-slate-400">
+                    Vui lòng nhập thông tin tài khoản để tiếp tục
                 </CardDescription>
             </CardHeader>
+
+            {/* Navigate Form */}
+            <div className="pt-6 w-full flex items-center justify-start gap-8 border-b border-gray-200">
+                <button
+                    onClick={() => router.push("/login")}
+                    className="pb-4 cursor-pointer"
+                >
+                    <span className="text-gray-400 font-medium text-[15px]! hover:text-gray-600 transition-colors duration-300 cursor-pointer">
+                        Đăng nhập
+                    </span>
+                </button>
+                <button
+                    onClick={() => router.push("/register")}
+                    className="pb-4 border-b-2 border-[#3B82F6] cursor-pointer"
+                >
+                    <span className="text-[#3B82F6] font-medium text-[15px]! cursor-pointer">
+                        Đăng ký
+                    </span>
+                </button>
+            </div>
+
+            {/* Form Content */}
             <CardContent>
                 <form
-                    id="form-rhf-demo"
+                    id="register-step1-form"
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
                 >
                     <FieldGroup>
                         <Controller
-                            name="email"
+                            name="identifier"
                             control={form.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel
-                                        htmlFor="register-email"
-                                        className="text-sm font-semibold text-slate-300 flex items-center"
-                                    >
-                                        Email
-                                    </FieldLabel>
                                     <Input
                                         {...field}
-                                        id="register-email"
-                                        type="email"
+                                        placeholder={
+                                            registerBy === "email"
+                                                ? "Nhập email của bạn"
+                                                : "Nhập số điện thoại của bạn"
+                                        }
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="Nhập email"
-                                        autoComplete="email"
-                                        className="bg-slate-800/60 border border-slate-700/40 rounded-lg px-4 py-2 text-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
+                                        className="border border-gray-200 rounded-lg px-4 py-6 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition mb-4"
                                     />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                            className="text-red-400 text-xs mt-1"
-                                        />
-                                    )}
                                 </Field>
                             )}
                         />
-                        <Controller
-                            name="username"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel
-                                        htmlFor="register-username"
-                                        className="text-sm font-semibold text-slate-300 flex items-center"
-                                    >
-                                        Username
-                                    </FieldLabel>
-                                    <Input
-                                        {...field}
-                                        id="register-username"
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="Nhập username"
-                                        autoComplete="username"
-                                        className="bg-slate-800/60 border border-slate-700/40 rounded-lg px-4 py-2 text-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                            className="text-red-400 text-xs mt-1"
-                                        />
-                                    )}
-                                </Field>
-                            )}
-                        />
-                        <Controller
-                            name="password"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel
-                                        htmlFor="register-password"
-                                        className="text-sm font-semibold text-slate-300 mb-1 flex items-center gap-2"
-                                    >
-                                        Password
-                                    </FieldLabel>
-                                    <Input
-                                        {...field}
-                                        id="register-password"
-                                        type="password"
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="Nhập mật khẩu"
-                                        autoComplete="current-password"
-                                        className="bg-slate-800/60 border border-slate-700/40 rounded-lg px-4 py-2 text-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                            className="text-red-400 text-xs mt-1"
-                                        />
-                                    )}
-                                </Field>
-                            )}
-                        />
-                        <Controller
-                            name="repassword"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel
-                                        htmlFor="register-repassword"
-                                        className="text-sm font-semibold text-slate-300 mb-1 flex items-center gap-2"
-                                    >
-                                        Nhập lại mật khẩu
-                                    </FieldLabel>
-                                    <Input
-                                        {...field}
-                                        id="register-repassword"
-                                        type="password"
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="Nhập lại mật khẩu"
-                                        autoComplete="new-password"
-                                        className="bg-slate-800/60 border border-slate-700/40 rounded-lg px-4 py-2 text-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                            className="text-red-400 text-xs mt-1"
-                                        />
-                                    )}
-                                </Field>
-                            )}
-                        />
+
+                        {/* Switch method */}
+                        <div className="w-full text-left pt-4">
+                            <button
+                                onClick={(e) => {
+                                    setRegisterBy(registerBy === "email" ? "phone" : "email")
+                                    e.preventDefault();
+                                }}
+                                className="text-[#3B82f6] hover:underline text-sm! cursor-pointer"
+                            >
+                                {registerBy === "email"
+                                    ? "Đăng ký bằng số điện thoại"
+                                    : "Đăng ký bằng email"}
+                            </button>
+                        </div>
                     </FieldGroup>
                 </form>
             </CardContent>
+
+            {/* Submit Button */}
             <CardFooter className="mb-6">
-                <div className="flex gap-4 justify-center items-center pt-2 mx-auto min-w-fit">
-                    <Button
+                <div className="w-full">
+                    <button
                         type="submit"
-                        form="form-rhf-demo"
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition"
+                        form="register-step1-form"
+                        className="w-full bg-[#1e40af] hover:bg-blue-700 text-white py-4! font-semibold rounded-full shadow-sm transition-colors duration-300 cursor-pointer"
                     >
                         Đăng ký
-                    </Button>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => form.reset()}
-                        className="border border-slate-700/40 text-black hover:border-blue-500 px-6 py-2 rounded-lg transition"
-                    >
-                        Reset
-                    </Button>
+                    </button>
                 </div>
             </CardFooter>
         </Card>
