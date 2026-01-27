@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     description: "Nền tảng tăng tương tác mạng xã hội hàng đầu Việt Nam. Tăng like, follow, view, comment chất lượng cao. Giá rẻ - Uy tín - Bảo hành.",
     images: [
       {
-        url: "/images/background-preview.jpg",
+        url: "/images/og-preview.jpg",
         width: 1200,
         height: 630,
         alt: "Likesub VIP - Dịch Vụ Tăng Tương Tác Mạng Xã Hội",
