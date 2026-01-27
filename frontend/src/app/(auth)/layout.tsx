@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
     return (
         <div className="min-h-screen flex">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-[4.5fr_5.5fr]">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-[5fr_5fr]">
                 {/* Left side - Branding */}
                 <div className="hidden lg:flex flex-col items-center bg-[#0f172a] px-8">
                     <div className="w-full py-8">
