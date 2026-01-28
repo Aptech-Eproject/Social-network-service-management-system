@@ -30,7 +30,7 @@ export default function Clients() {
 
   return (
     <section className="px-22 pb-20">
-      <div className="py-22 px-6 bg-orange-600 rounded-xl">
+      <div className="py-22 px-6 bg-linear-to-br from-orange-500 via-orange-600 to-orange-700 rounded-xl">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
           {/* Left: Content */}
           <div className="flex flex-col gap-4">

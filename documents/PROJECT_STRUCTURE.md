@@ -5,7 +5,7 @@
 Project sử dụng kiến trúc **Microservices** với:
 - **Backend**: .NET 8 (ASP.NET Core)
 - **Frontend**: Next.js 15 (React, TypeScript)
-- **Database**: SQL Server
+- **Database**: MySql
 - **Cache**: Redis 7
 - **Container**: Docker + Docker Compose
 - **CI/CD**: GitHub Actions
@@ -45,7 +45,7 @@ backend/
 - `Program.cs` - Entry point, YARP config
 - `appsettings.json` - Routes, clusters, CORS
 - `api-gateway.csproj` - Dependencies
-- `.env` - Environment variables
+- `appsettings.Development/Production.json` - Environment variables
 
 **Port**: 8000
 
@@ -99,78 +99,7 @@ backend/
 - Microsoft.EntityFrameworkCore.SqlServer
 - StackExchange.Redis
 
-**APIs**:
-- `POST /api/posts` - Tạo post
-- `GET /api/posts` - List posts
-- `POST /api/posts/{id}/like` - Like post
-- `POST /api/posts/{id}/comment` - Comment
 
----
-
-## ⚛️ Frontend (`/frontend`)
-
-### **Cấu trúc**
-```
-frontend/
-├── app/                       # Next.js App Router
-│   ├── api/                  # API routes
-│   ├── auth/                 # Auth pages
-│   ├── dashboard/            # Dashboard pages
-│   ├── layout.tsx            # Root layout
-│   └── page.tsx              # Home page
-├── components/               # React components
-│   └── forms/
-│       └── login-form.tsx
-├── lib/                      # Utilities
-│   ├── client/              # Client-side utils
-│   │   └── api-client.ts
-│   ├── server/              # Server-side utils
-│   │   ├── auth.ts
-│   │   └── gateway-client.ts
-│   └── config.ts
-├── types/                    # TypeScript types
-│   ├── api.ts
-│   ├── auth.ts
-│   └── index.ts
-├── public/                   # Static assets
-├── .env                      # Environment variables
-├── next.config.ts            # Next.js config
-├── package.json              # Dependencies
-└── tsconfig.json             # TypeScript config
-```
-
-### **Thành phần chính**
-
-**App Router** (`/app`):
-- `page.tsx` - Landing page
-- `layout.tsx` - Root layout (metadata, fonts)
-- `auth/login/page.tsx` - Login page
-- `dashboard/page.tsx` - Dashboard (protected)
-- `api/auth/[...nextauth]/route.ts` - NextAuth routes
-
-**Components** (`/components`):
-- `forms/login-form.tsx` - Login form component
-
-**Libraries** (`/lib`):
-- `client/api-client.ts` - Client-side API calls
-- `server/gateway-client.ts` - Server-side API calls
-- `server/auth.ts` - Auth utilities
-- `config.ts` - App configuration
-
-**Types** (`/types`):
-- `auth.ts` - Auth types
-- `api.ts` - API response types
-
-**Port**: 3000
-
-**Dependencies**:
-- Next.js 15
-- React 19
-- TypeScript
-- Tailwind CSS
-- NextAuth.js (planned)
-
----
 
 ## 🐳 Container (`/container`)
 
@@ -309,8 +238,7 @@ documents/
 
 ### **package.json**
 Root package.json chứa npm scripts:
-- Development: `dev:up`, `dev:down`, `dev:logs`
-- Frontend: `frontend:dev`, `frontend:build`
+- Development: `dev:pull`, `dev:build`, `dev:logs`
 - Docker: `docker:ps`, `docker:prune`
 - Utilities: `sync`, `health`, `setup:dev`
 
@@ -323,81 +251,56 @@ Project overview, quick start guide
 
 ---
 
-## 🗄️ Database Schema
-
-### **SNMS_UserDB** (User Service)
-```sql
-users
-├── id (PK)
-├── username
-├── email
-├── password_hash
-├── created_at
-└── updated_at
-```
-
-### **SNMS_SocialDB** (Social Service)
-```sql
-posts
-├── id (PK)
-├── user_id (FK)
-├── content
-├── created_at
-└── updated_at
-
-comments
-├── id (PK)
-├── post_id (FK)
-├── user_id (FK)
-├── content
-└── created_at
-
-likes
-├── id (PK)
-├── post_id (FK)
-├── user_id (FK)
-└── created_at
-
-follows
-├── id (PK)
-├── follower_id (FK)
-├── following_id (FK)
-└── created_at
-```
-
----
-
 ## 🔐 Environment Variables
 
-### **API Gateway** (`.env`)
-```env
-ASPNETCORE_ENVIRONMENT=Development
-ASPNETCORE_URLS=http://+:8000
+### **API Gateway** (`appsettings.Development/Production.json`)
+```json
+{
+  "Cors": {
+    "AllowedOrigins": [
+      "http://localhost:3000"
+    ]
+  }
+}
+
 ```
 
-### **User Service** (`.env`)
-```env
-ASPNETCORE_ENVIRONMENT=Development
-ASPNETCORE_URLS=http://+:8001
-CONNECTION_STRING=Server=your-sql-server,1433;Database=SNMS_UserDB;...
-JWT_SECRET_KEY=your-secret-key
-JWT_ISSUER=snms-api-gateway
-JWT_AUDIENCE=snms-services
+### **User Service** (`appsettings.Development/Production.json`)
+```json
+{
+    "Database": {
+        "AutoMigrate": true
+    },
+    "ConnectionStrings": {
+        "Default": "Server=mysql-db;Port=3306;Database=user_lsmi;User=root;Password=root"
+    }
+
+}
 ```
 
-### **Social Service** (`.env`)
-```env
-ASPNETCORE_ENVIRONMENT=Development
-ASPNETCORE_URLS=http://+:8002
-CONNECTION_STRING=Server=your-sql-server,1433;Database=SNMS_SocialDB;...
-Redis__ConnectionString=redis:6379
+### **Social Service** (`appsettings.Development/Production.json`)
+```json
+{
+    "Database": {
+        "AutoMigrate": true
+    },
+    "ConnectionStrings": {
+        "Default": "Server=mysql-db;Port=3306;Database=cocial_lsmi;User=root;Password=root"
+    }
+
+}
 ```
 
 ### **Frontend** (`.env`)
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXTAUTH_SECRET=your-nextauth-secret
-NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_NAME=lsmi
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_ENV=local
+
+
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
 ```
 
 ---

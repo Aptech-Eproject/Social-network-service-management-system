@@ -48,8 +48,10 @@ services:
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     command: dotnet watch --project user-service.csproj run --no-launch-profile
     depends_on:
-      - sqlserver
-      - redis
+      mysql-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - snms-network
     deploy:
@@ -79,8 +81,10 @@ services:
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "true"
     command: dotnet watch --project social-service.csproj run --no-launch-profile
     depends_on:
-      - sqlserver
-      - redis
+      mysql-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - snms-network
     deploy:
@@ -108,28 +112,63 @@ services:
       resources:
         limits:
           cpus: 0.25
-          memory: 256MB
+          memory: 512MB
         reservations:
           cpus: 0.25
-          memory: 128MB
+          memory: 256MB
     restart: unless-stopped
 
   # Database: SQL Server
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver_dev
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql_dev
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "P@sswordDatabase123"
-      MSSQL_PID: "Developer"
-      TZ: Asia/Ho_Chi_Mi
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "1433:1433"   
+      - "3306:3306"          
     volumes:
-      - sqlserver_data:/var/opt/mssql
+      - mysql_data_dev:/var/lib/mysql
+      - ../script/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 1GB
+        reservations:
+          cpus: 0.5
+          memory: 512MB
     networks:
       - snms-network
-    restart: unless-stopped
+
+  #  phpMyAdmin — optional dev tool
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: phpmyadmin_dev
+    ports:
+      - "8070:80"
+    environment:
+      PMA_HOST: mysql-db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 64M
+        reservations:
+          cpus: 0.25
+          memory: 32M
+    networks:
+      - snms-network
 #=============================================================
 networks:
   snms-network:
@@ -138,10 +177,18 @@ networks:
 
 volumes:
   gateway_bin:
+    name: gateway_bin
   gateway_obj:
+    name: gateway_obj
   user_bin:
+    name: user_bin
   user_obj:
+    name: user_obj
   social_bin:
+    name: cocial_bin
   social_obj:
+    name: socaial_obj
+  mysql_data_dev:
+    name: mysql_data_dev
   redis_data:
-  sqlserver_data:
+    name: redis_data
