@@ -31,7 +31,7 @@ export default function Hero() {
   return (
     <section className="pt-40 min-h-screen relative bg-white">
       <div className="flex flex-col text-center items-center max-w-7xl mx-auto px-6 gap-12">
-        <div className="md:w-175 w-full">
+        <div className="md:w-250 w-full">
           <div>
             <h1 className="text-5xl! font-extrabold text-gray-700 mb-6 leading-tight">
               <span className="block">
@@ -46,19 +46,35 @@ export default function Hero() {
               Tạo hiệu ứng đám đông, giúp bạn chốt đơn và xây dựng uy tín dễ dàng hơn.
             </p>
 
-            {/* Social Media Logos */}
-            <div className="relative w-full! py-8 bg-linear-to-b from-transparent via-blue-50/30 to-transparent">
-              <div className="flex gap-22 px-6 items-center justify-center">
-                {socialMediaLogos.map((social, idx) => (
+            {/* Social Media Logos Carousel */}
+            <div className="relative w-full py-8 overflow-hidden">
+              <style jsx>{`
+                @keyframes scroll {
+                  from {
+                    transform: translateX(0);
+                  }
+                  to {
+                    transform: translateX(calc(-192px * 6));
+                  }
+                }
+                .animate-scroll {
+                  animation: scroll 14s linear infinite;
+                }
+                .animate-scroll:hover {
+                  animation-play-state: paused;
+                }
+              `}</style>
+              <div className="flex gap-16 animate-scroll">
+                {[...socialMediaLogos, ...socialMediaLogos, ...socialMediaLogos, ...socialMediaLogos].map((social, idx) => (
                   <div
                     key={idx}
-                    className="shrink-0 h-16 flex items-center justify-center transition-transform hover:scale-110 duration-300"
+                    className="shrink-0 h-16 w-32 flex items-center justify-center transition-transform hover:scale-110 duration-300"
                     title={social.name}
                   >
                     <img
                       src={social.logo}
                       alt={social.name}
-                      className="min-h-0.5 w-32 object-contain"
+                      className="h-12 w-32 object-contain transition-all duration-300"
                     />
                   </div>
                 ))}
